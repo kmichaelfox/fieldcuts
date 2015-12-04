@@ -1,16 +1,65 @@
 (
-var gui = gui ? ();
+var gui = gui ? (),
+data = data ? ();
+//0, 11 29 2015 19 14 34 2915849 perf_1 trig_1 on;
+data.sampleID = 0;
+data.month = 1;
+data.day = 2;
+data.year = 3;
+data.hour = 4;
+data.minute = 5;
+data.second = 6;
+data.tick = 7;
+data.perfID = 8;
+data.trigID = 9;
+data.state = 10;
 
 //
 // Global gui code and data
 //
 gui.title = "fieldcuts";
-gui.width = 800;
-gui.height = 500;
+gui.width = 450;
+gui.height = 200;
 gui.margin = 10;
 gui.panelBrightness = 0.5;
 gui.dataFilePath = "";
 gui.fileReader = nil;
+gui.counter = 0;
+gui.timeStamp = 0;
+gui.loopback = NetAddr("127.0.0.1", NetAddr.langPort);
+
+gui.counterRoutine = Routine({
+	loop({
+		//gui.counter = gui.counter + 1;
+		//"looping".postln;
+		//1.wait;
+		//gui.fileReader[gui.counter][data.tick].postln;
+		//gui.timeStamp.postln;
+		if(gui.fileReader[gui.counter][data.tick].asInteger > gui.timeStamp, {
+			((1/60) * (gui.fileReader[gui.counter][data.tick].asInteger - gui.timeStamp.asInteger)).wait;
+
+			gui.timeStamp = gui.fileReader[gui.counter][data.tick].asInteger;
+		});
+
+		if(gui.counter >= gui.fileReader.size,
+			{
+				"Reached end of data".postln;
+				gui.counterRoutine.stop;
+			}, {
+				//"sampling".postln;
+				gui.loopback.sendMsg(
+					"/fieldcuts/" ++ gui.fileReader[gui.counter][data.perfID].asString,
+					gui.fileReader[gui.counter][data.trigID],
+					gui.fileReader[gui.counter][data.state]
+				);
+
+				gui.counter = gui.counter + 1;
+
+				gui.paramPanel.curPosCounter.string_(gui.counter.asString);
+			}
+		);
+	});
+});
 
 Window.closeAll;
 gui.w = Window
@@ -54,10 +103,10 @@ gui.headingPanel.loadTrigDataButton = Button(gui.headingPanel.view,
 		gui.dataFilePath = path;
 		gui.headingPanel.trigDataFilePathText.string_(path);
 
-		if(gui.fileReader.notNil, {
+		/*if(gui.fileReader.notNil, {
 			if(gui.fileReader.isOpen, {gui.fileReader.close;});
 			gui.fileReader = nil;
-		});
+		});*/
 
 		gui.fileReader = FileReader.read(gui.dataFilePath);
 		//gui.fileReader.inspect;
@@ -98,6 +147,15 @@ gui.paramPanel.view = CompositeView(gui.w,
 gui.paramPanel.setup = {
 	gui.paramPanel.curPosCounter.string_("0");
 	gui.paramPanel.lengthCounter.string_((gui.fileReader.size - 1).asString);
+	gui.paramPanel.runButton.states_([
+		["Run", Color.black, Color.gray(0.8)],
+		["Stop", Color.black, Color.gray(0.8)]
+	]);
+	gui.paramPanel.runButton.enabled_(true);
+	gui.paramPanel.resetButton.states_([["Reset",Color.black,Color.gray(0.8)]]);
+	gui.paramPanel.resetButton.enabled_(true);
+	gui.timeStamp = gui.fileReader[0][data.tick].asInteger;
+	gui.timeStamp.postln;
 };
 
 gui.paramPanel.title = StaticText(gui.paramPanel.view,
@@ -105,8 +163,51 @@ gui.paramPanel.title = StaticText(gui.paramPanel.view,
 .string_("Parameters")
 .font_(Font("Helvetica", 16));
 
-gui.paramPanel.curPos = "";
-gui.paramPanel.length = "";
+gui.paramPanel.runButton = Button(gui.paramPanel.view,
+	Rect(gui.paramPanel.width - (200 + gui.margin),
+		gui.margin,
+		95,
+		30))
+.states_([
+	["Run", Color.gray, Color.gray(0.8)]
+])
+.action_({ |state|
+	if(state.value == 1,
+		{
+			"running".postln;
+			if(gui.counter == 0,
+				{
+					gui.counterRoutine.play(AppClock);
+				},{
+					"restarting".postln;
+					gui.counterRoutine.reset;
+					gui.counterRoutine.play(AppClock);
+				}
+			);
+		},{
+			"stopping".postln;
+			gui.counterRoutine.stop;
+		}
+	);
+})
+.enabled_(false);
+
+gui.paramPanel.resetButton = Button(gui.paramPanel.view,
+	Rect(gui.paramPanel.width - (95 + gui.margin),
+		gui.margin,
+		95,
+		30))
+.states_([
+	["Reset", Color.gray, Color.gray(0.8)]
+])
+.action_({
+	gui.counter = 0;
+	gui.timeStamp = gui.fileReader[0][data.tick].asInteger;
+	gui.paramPanel.curPosCounter.string_(gui.counter.asString);
+	//gui.paramPanel.runButton.value_(1);
+	gui.counterRoutine.reset;
+})
+.enabled_(false);
 
 gui.paramPanel.curPosLabel = StaticText(gui.paramPanel.view,
 	Rect(gui.margin,
