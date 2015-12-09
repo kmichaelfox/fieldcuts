@@ -7,7 +7,7 @@ performerData.perf1.trig1 = performerData.perf1.trig1 ? ();
 performerData.perf1.trig2 = performerData.perf1.trig2 ? ();
 performerData.perf1.trig3 = performerData.perf1.trig3 ? ();
 performerData.perf1.trig4 = performerData.perf1.trig4 ? ();
-"this far".postln;
+
 performerData.perf2 = performerData.perf2 ? ();
 performerData.perf2.trig1 = performerData.perf2.trig1 ? ();
 performerData.perf2.trig2 = performerData.perf2.trig2 ? ();
@@ -93,11 +93,13 @@ performerData.perf3.trig4.offDurations = List.new(10);
 
 // execute other code
 ~outputBus = Bus.audio(s, 2);
+~delayBus = Bus.audio(s, 2);
 ~master = Synth(\master, [\in, ~outputBus.index]);
+~netDel = Synth(\networkDelay, [\in, ~delayBus.index, \out, ~outputBus.index]);
 
-~perf_1 = Synth(\perf_1_pad, [\pan, 1, \out, ~outputBus.index]);
-~perf_2 = Synth(\perf_2_pad, [\pan, 0, \out, ~outputBus.index]);
-~perf_3 = Synth(\perf_3_pad, [\pan, -1, \out, ~outputBus.index]);
+~perf_1 = Synth(\perf_1_pad, [\pan, 1, \out, ~delayBus.index]);
+~perf_2 = Synth(\perf_2_pad, [\pan, 0, \out, ~delayBus.index]);
+~perf_3 = Synth(\perf_3_pad, [\pan, -1, \out, ~delayBus.index]);
 
 OSCFunc({ |msg, time, addr, recvPort|
 	var x = case
@@ -143,7 +145,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\pan, 1, \out, ~outputBus.index]);
+		Synth(\trig_1, [\pan, 1, \out, ~delayBus.index]);
 	}
 	{msg[1] == \trig_2} {
 		//("perf_1 -> trig_2 " + msg[2]).postln;
@@ -187,7 +189,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\pan, 1, \out, ~outputBus.index]);
+		Synth(\trig_2, [\pan, 1, \out, ~delayBus.index]);
 	}
 	{msg[1] == \trig_3} {
 		//("perf_1 -> trig_3 " + msg[2]).postln;
@@ -232,7 +234,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\pan, 1, \out, ~outputBus.index]);
+		Synth(\trig_3, [\pan, 1, \out, ~delayBus.index]);
 	}
 	{msg[1] == \trig_4} {
 		//("perf_1 -> trig_4 " + msg[2]).postln;
@@ -277,7 +279,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\pan, 1, \out, ~outputBus.index]);
+		Synth(\trig_4, [\pan, 1, \out, ~delayBus.index]);
 	};
 
 	//x.postln;
@@ -328,7 +330,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\pan, 0, \out, ~outputBus.index]);
+		Synth(\trig_1, [\pan, 0, \out, ~delayBus.index]);
 	}
 	{msg[1] == \trig_2} {
 		//("perf_2 -> trig_2 " + msg[2]);
@@ -373,7 +375,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\pan, 0, \out, ~outputBus.index]);
+		Synth(\trig_2, [\pan, 0, \out, ~delayBus.index]);
 	}
 	{msg[1] == \trig_3} {
 		//("perf_2 -> trig_3 " + msg[2]);
@@ -418,7 +420,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\pan, 0, \out, ~outputBus.index]);
+		Synth(\trig_3, [\pan, 0, \out, ~delayBus.index]);
 	}
 	{msg[1] == \trig_4} {
 		//("perf_2 -> trig_4 " + msg[2]);
@@ -463,7 +465,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\pan, 0, \out, ~outputBus.index]);
+		Synth(\trig_4, [\pan, 0, \out, ~delayBus.index]);
 	};
 
 	//x.postln;
@@ -510,7 +512,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\pan, -1, \out, ~outputBus.index]);
+		Synth(\trig_1, [\pan, -1, \out, ~delayBus.index]);
 	}
 	{msg[1] == \trig_2} {
 		//("contr -> trig_2 " + msg[2]);
@@ -551,7 +553,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\pan, -1, \out, ~outputBus.index]);
+		Synth(\trig_2, [\pan, -1, \out, ~delayBus.index]);
 	}
 	{msg[1] == \trig_3} {
 		//("contr -> trig_3 " + msg[2]);
@@ -592,7 +594,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\pan, -1, \out, ~outputBus.index]);
+		Synth(\trig_3, [\pan, -1, \out, ~delayBus.index]);
 	}
 	{msg[1] == \trig_4} {
 		//("contr -> trig_4 " + msg[2]);
@@ -633,7 +635,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\pan, -1, \out, ~outputBus.index]);
+		Synth(\trig_4, [\pan, -1, \out, ~delayBus.index]);
 	};
 
 	//x.postln;
