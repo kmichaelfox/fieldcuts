@@ -238,16 +238,16 @@ gui.paramPanel.lengthCounter = TextView(gui.paramPanel.view,
 .enabled_(false);
 
 // shortcut
-gui.dataFilePath = "/Users/kellyfox/Desktop/fieldcuts_dev_112915_dataStream/sample_data/fieldcuts_dev_112915_run_1_trig.txt";
-gui.dataFilePath.postln;
-gui.headingPanel.trigDataFilePathText.string_("/Users/kellyfox/Desktop/fieldcuts_dev_112915_dataStream/sample_data/fieldcuts_dev_112915_run_1_trig.txt");
-
-/*if(gui.fileReader.notNil, {
-if(gui.fileReader.isOpen, {gui.fileReader.close;});
-gui.fileReader = nil;
-});*/
-
-gui.fileReader = FileReader.read(gui.dataFilePath);
-//gui.fileReader.inspect;
-gui.paramPanel.setup.value;
+// gui.dataFilePath = "/Users/kellyfox/Desktop/fieldcuts_dev_112915_dataStream/sample_data/fieldcuts_dev_112915_run_1_trig.txt";
+// gui.dataFilePath.postln;
+// gui.headingPanel.trigDataFilePathText.string_("/Users/kellyfox/Desktop/fieldcuts_dev_112915_dataStream/sample_data/fieldcuts_dev_112915_run_1_trig.txt");
+//
+// /*if(gui.fileReader.notNil, {
+// if(gui.fileReader.isOpen, {gui.fileReader.close;});
+// gui.fileReader = nil;
+// });*/
+//
+// gui.fileReader = FileReader.read(gui.dataFilePath);
+// //gui.fileReader.inspect;
+// gui.paramPanel.setup.value;
 )

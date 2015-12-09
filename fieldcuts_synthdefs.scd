@@ -92,9 +92,9 @@ SynthDef(\perf_1_pad, {|pan = 0, gate = 0, out = 0|
 				0.3,
 				0.9)
 		),
-		SawDPW.kr(
+		Saw.kr(
 			0.1,  // freq
-			0, // iphase
+			//0, // iphase
 			0.2, // mul
 			0.21 // add
 		)
