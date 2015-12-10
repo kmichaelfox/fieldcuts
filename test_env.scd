@@ -93,20 +93,49 @@ performerData.perf3.trig4.offDurations = List.new(10);
 
 // execute other code
 ~outputBus = Bus.audio(s, 2);
-~delayBus = Bus.audio(s, 2);
-~master = Synth(\master, [\in, ~outputBus.index]);
-~netDel = Synth(\networkDelay, [\in, ~delayBus.index, \out, ~outputBus.index]);
 
-~perf_1 = Synth(\perf_1_pad, [\pan, 1, \out, ~delayBus.index]);
-~perf_2 = Synth(\perf_2_pad, [\pan, 0, \out, ~delayBus.index]);
-~perf_3 = Synth(\perf_3_pad, [\pan, -1, \out, ~delayBus.index]);
+~delayBus = [Bus.audio(s), Bus.audio(s), Bus.audio(s)];
+~master = Synth(\master, [\in, ~outputBus.index]);
+~netDel = Synth(\netDelay, [
+	\in1, ~delayBus[0].index,
+	\in2, ~delayBus[1].index,
+	\in3, ~delayBus[2].index,
+	\out, ~outputBus.index
+]);
+/*~netDel = [
+	Synth(\networkDelay, [
+		\in, ~delayBus[0].index,
+		\out, ~outputBus.index,
+		\del_1, ~delayBus[1].index,
+		\del_2, ~delayBus[2].index,
+		\pan, -1
+	]),
+	Synth(\networkDelay, [
+		\in, ~delayBus[1].index,
+		\out, ~outputBus.index,
+		\del_1, ~delayBus[0].index,
+		\del_2, ~delayBus[2].index,
+		\pan, 0
+	]),
+	Synth(\networkDelay, [
+		\in, ~delayBus[2].index,
+		\out, ~outputBus.index,
+		\del_1, ~delayBus[0].index,
+		\del_2, ~delayBus[1].index,
+		\pan, 1
+	])
+];*/
+
+~perf_1 = Synth(\perf_1_pad, [\pan, 1, \out, ~delayBus[0].index]);
+~perf_2 = Synth(\perf_2_pad, [\pan, 0, \out, ~delayBus[1].index]);
+~perf_3 = Synth(\perf_3_pad, [\pan, -1, \out, ~delayBus[2].index]);
 
 OSCFunc({ |msg, time, addr, recvPort|
 	var x = case
 	{msg[1] == \trig_1} {
-		//("perf_1 -> trig_1 " + msg[2]).postln;
+		("perf_1 -> trig_1 " + msg[2]).postln;
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf1.trig1.state == false, {
 				performerData.perf1.trig1.state = true;
@@ -126,7 +155,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf1.trig1.state == true, {
 				performerData.perf1.trig1.state = false;
@@ -145,12 +174,12 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\pan, 1, \out, ~delayBus.index]);
+		Synth(\trig_1, [\pan, 1, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_2} {
-		//("perf_1 -> trig_2 " + msg[2]).postln;
+		("perf_1 -> trig_2 " + msg[2]).postln;
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf1.trig2.state == false, {
 				performerData.perf1.trig2.state = true;
@@ -170,7 +199,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf1.trig2.state == true, {
 				performerData.perf1.trig2.state = false;
@@ -189,12 +218,12 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\pan, 1, \out, ~delayBus.index]);
+		Synth(\trig_2, [\pan, 1, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_3} {
-		//("perf_1 -> trig_3 " + msg[2]).postln;
+		("perf_1 -> trig_3 " + msg[2]).postln;
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf1.trig3.state == false, {
 				performerData.perf1.trig3.state = true;
@@ -214,7 +243,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf1.trig3.state == true, {
 				performerData.perf1.trig3.state = false;
@@ -234,12 +263,12 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\pan, 1, \out, ~delayBus.index]);
+		Synth(\trig_3, [\pan, 1, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_4} {
-		//("perf_1 -> trig_4 " + msg[2]).postln;
+		("perf_1 -> trig_4 " + msg[2]).postln;
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf1.trig4.state == false, {
 				performerData.perf1.trig4.state = true;
@@ -259,7 +288,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf1.trig4.state == true, {
 				performerData.perf1.trig4.state = false;
@@ -279,7 +308,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\pan, 1, \out, ~delayBus.index]);
+		Synth(\trig_4, [\pan, 1, \out, ~outputBus.index]);
 	};
 
 	//x.postln;
@@ -288,9 +317,9 @@ OSCFunc({ |msg, time, addr, recvPort|
 OSCFunc({ |msg, time, addr, recvPort|
 	var x = case
 	{msg[1] == \trig_1} {
-		//("perf_2 -> trig_1 " + msg[2]);
+		("perf_2 -> trig_1 " + msg[2]);
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf2.trig1.state == false, {
 				performerData.perf2.trig1.state = true;
@@ -310,7 +339,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf2.trig1.state == true, {
 				performerData.perf2.trig1.state = false;
@@ -330,12 +359,12 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\pan, 0, \out, ~delayBus.index]);
+		Synth(\trig_1, [\pan, 0, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_2} {
-		//("perf_2 -> trig_2 " + msg[2]);
+		("perf_2 -> trig_2 " + msg[2]);
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf2.trig2.state == false, {
 				performerData.perf2.trig2.state = true;
@@ -355,7 +384,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf2.trig2.state == true, {
 				performerData.perf2.trig2.state = false;
@@ -375,12 +404,12 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\pan, 0, \out, ~delayBus.index]);
+		Synth(\trig_2, [\pan, 0, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_3} {
-		//("perf_2 -> trig_3 " + msg[2]);
+		("perf_2 -> trig_3 " + msg[2]);
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf2.trig3.state == false, {
 				performerData.perf2.trig3.state = true;
@@ -400,7 +429,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf2.trig3.state == true, {
 				performerData.perf2.trig3.state = false;
@@ -420,12 +449,12 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\pan, 0, \out, ~delayBus.index]);
+		Synth(\trig_3, [\pan, 0, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_4} {
-		//("perf_2 -> trig_4 " + msg[2]);
+		("perf_2 -> trig_4 " + msg[2]);
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf2.trig4.state == false, {
 				performerData.perf2.trig4.state = true;
@@ -445,7 +474,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf2.trig4.state == true, {
 				performerData.perf2.trig4.state = false;
@@ -465,7 +494,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\pan, 0, \out, ~delayBus.index]);
+		Synth(\trig_4, [\pan, 0, \out, ~outputBus.index]);
 	};
 
 	//x.postln;
@@ -474,9 +503,9 @@ OSCFunc({ |msg, time, addr, recvPort|
 OSCFunc({ |msg, time, addr, recvPort|
 	var x = case
 	{msg[1] == \trig_1} {
-		//("contr -> trig_1 " + msg[2]);
+		("contr -> trig_1 " + msg[2]);
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf3.trig1.state == false, {
 				performerData.perf3.trig1.state = true;
@@ -494,7 +523,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf3.trig1.state == true, {
 				performerData.perf3.trig1.state = false;
@@ -512,15 +541,15 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\pan, -1, \out, ~delayBus.index]);
+		Synth(\trig_1, [\pan, -1, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_2} {
-		//("contr -> trig_2 " + msg[2]);
+		("contr -> trig_2 " + msg[2]);
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf3.trig2.state == false, {
-				performerData.perf3.trig3.state = true;
+				performerData.perf3.trig2.state = true;
 				if(performerData.perf3.trig2.timestamp.notNil, {
 					if(performerData.perf3.trig2.offDurations.size == 10, {
 						performerData.perf3.trig2.offDurations.pop;
@@ -535,7 +564,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf3.trig2.state == true, {
 				performerData.perf3.trig2.state = false;
@@ -553,12 +582,12 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\pan, -1, \out, ~delayBus.index]);
+		Synth(\trig_2, [\pan, -1, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_3} {
-		//("contr -> trig_3 " + msg[2]);
+		("contr -> trig_3 " + msg[2]);
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf3.trig3.state == false, {
 				performerData.perf3.trig3.state = true;
@@ -576,7 +605,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf3.trig3.state == true, {
 				performerData.perf3.trig3.state = false;
@@ -594,12 +623,12 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\pan, -1, \out, ~delayBus.index]);
+		Synth(\trig_3, [\pan, -1, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_4} {
-		//("contr -> trig_4 " + msg[2]);
+		("contr -> trig_4 " + msg[2]);
 
-		if(msg[2] == 'on;', {
+		if(msg[2] == 'on', {
 			//"turning on".postln;
 			if(performerData.perf3.trig4.state == false, {
 				performerData.perf3.trig4.state = true;
@@ -617,7 +646,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		if(msg[2] == 'off;', {
+		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf3.trig4.state == true, {
 				performerData.perf3.trig4.state = false;
@@ -635,9 +664,18 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\pan, -1, \out, ~delayBus.index]);
+		Synth(\trig_4, [\pan, -1, \out, ~outputBus.index]);
 	};
 
 	//x.postln;
 }, '/fieldcuts/contr');
+
+OSCFunc({
+	~master.set(\gate, 0);
+}, '/fieldcuts/fadeOut');
+
+//OSCFunc({ |msg|
+//	msg.postln;
+//}, '/');
+s.scope;
 )
