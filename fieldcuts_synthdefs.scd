@@ -12,7 +12,7 @@ SynthDef(\master, { |in, out = 0, gate = 1|
 SynthDef(\netDelay, { |in1, in2, in3, scale = 0, out = 0|
 	var feedback, sig1, sig2, sig3, delay;
 
-	feedback = LPF.ar(EnvGen.ar(Env.adsr(attackTime:0.1, curve: 0), scale) * LocalIn.ar(3), 400);
+	feedback = LPF.ar(EnvGen.ar(Env.adsr(attackTime: (15 * 60), curve: 0), scale) * LocalIn.ar(3), 400);
 
 	sig1 = In.ar(in1) + (feedback[0] * 0.8);
 	sig2 = In.ar(in2) + (feedback[1] * 0.8);
@@ -125,11 +125,10 @@ SynthDef(\perf_2_pad, {|pan = 0, gate = 0, out = 0|
 	var osc, env, sig;
 	//350
 	osc = BPF.ar(Mix.ar(
-		SinOsc.ar((WhiteNoise.ar(0.2) + TRand.kr(250, 400,
-			Latch.kr(gate, Changed.kr(gate)))) * [0.5, 0.98, 1, 1.01,  2, 2.02, 4], mul: 0.5)), 350, Dust.kr(5, 0.05, 0.09), 5).clip(-1, 1);
+		SinOsc.ar((WhiteNoise.ar(0.2) + (TChoose.kr(Latch.kr(gate, Changed.kr(gate)), [0, 2, 3, 5]) + (12 * 4)).midicps) * [0.98, 1, 1.01,  2, 2.02, 4], mul: 0.5 + WhiteNoise.ar(0.05))), 350, Dust.kr(5, 0.2, 0.09), 5).clip(-1, 1);
 	/*osc = BPF.ar(WhiteNoise.ar(0.5), Latch.ar(700 * SinOsc.kr(0.01, mul:0.02, add: 1), Dust.kr(0.3)), 0.05);*/
 
-	env = EnvGen.kr(Env.adsr(3, curve:5), gate, doneAction: 0);
+	env = EnvGen.kr(Env.adsr(3, curve:6), gate, doneAction: 0);
 
 	sig = osc * env;
 
@@ -144,7 +143,7 @@ SynthDef(\perf_3_pad, {|pan = 0, gate = 0, out = 0|
 	//osc = Mix.ar(SinOsc.ar(410 * [0.5, 0.98, 1, 1.01,  2, 4], mul: 0.05));
 	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, 0, 0.8), freq.midicps)).clip(-1, 1);
 
-	env = EnvGen.kr(Env.adsr(3, curve:10), gate, doneAction: 0);
+	env = EnvGen.kr(Env.adsr(3, curve:8), gate, doneAction: 0);
 
 	sig = osc * env;
 

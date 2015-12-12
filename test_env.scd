@@ -85,7 +85,7 @@ performerData.perf3.trig4.offDurations = List.new(10);
 
 
 
-//Server.local.options.outDevice_("Fieldcuts_Aggregate");
+Server.local.options.outDevice_("Fieldcuts_Aggregate");
 //Server.local.options.outDevice_("AudioBox USB");
 
 s.boot;

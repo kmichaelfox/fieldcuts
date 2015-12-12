@@ -20,3 +20,5 @@ s.scope;
 ~netDel.set(\scale, 0);
 
 1.9.asInteger%2
+
+p.pop
