@@ -85,13 +85,16 @@ performerData.perf3.trig4.offDurations = List.new(10);
 
 
 
-Server.local.options.outDevice_("Fieldcuts_Aggregate");
+//Server.local.options.outDevice_("Fieldcuts_Aggregate");
 //Server.local.options.outDevice_("AudioBox USB");
 
 s.boot;
 
 // load program modules (gui and synth defs)
-s.doWhenBooted({(thisProcess.nowExecutingPath.dirname +/+ "fieldcuts*.scd").loadPaths;
+s.doWhenBooted({
+
+
+(thisProcess.nowExecutingPath.dirname +/+ "fieldcuts*.scd").loadPaths;
 
 
 

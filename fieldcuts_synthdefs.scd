@@ -9,42 +9,21 @@ SynthDef(\master, { |in, out = 0, gate = 1|
 	Out.ar(out, FreeVerb.ar(env, 0.2, 5, 0.8));
 }).add;
 
-/*SynthDef(\networkDelay, { |in, out = nil, del_1 = nil, del_2 = nil, scale = 1, xpan = 0, ypan = 0|
-	var local, pass, delay_sig, feedback_pan;
-
-	local = In.ar(in);
-
-	pass = Pan4.ar(local, xpan, ypan);
-
-	feedback_pan = TChoose.ar(Dust2.ar(Rand(1, 1.5)), [DC.ar(0), DC.ar(1)]);//Rand(0.2, 1));
-
-	delay_sig = AllpassN.ar(local * 0.9, 2.5, Rand(1, 1.5), mul:scale);
-
-	if(out.notNil, { Out.ar(out, pass); });
-
-	//if(del_1.notNil && del_2.notNil, {
-		Out.ar(del_1, delay_sig * feedback_pan);
-		Out.ar(del_2, delay_sig * (1 - feedback_pan));
-	//});
-
-	//if(del_2.notNil, { Out.ar(del_2, Pan2.ar(delay_sig, Dust2.ar(3))); });
-}).add;*/
-
 SynthDef(\netDelay, { |in1, in2, in3, scale = 0, out = 0|
 	var feedback, sig1, sig2, sig3, delay;
 
-	feedback = LPF.ar(EnvGen.ar(Env.adsr(attackTime:30, curve: 0), scale) * LocalIn.ar(3), 400);
+	feedback = LPF.ar(EnvGen.ar(Env.adsr(attackTime:0.1, curve: 0), scale) * LocalIn.ar(3), 400);
 
 	sig1 = In.ar(in1) + (feedback[0] * 0.8);
 	sig2 = In.ar(in2) + (feedback[1] * 0.8);
 	sig3 = In.ar(in3) + (feedback[2] * 0.8);
 
-	delay = DelayN.ar([sig1, sig2, sig3], 1.5, [Rand(0.5, 1), Rand(0.5, 1), Rand(0.5, 1)]);
+	delay = DelayN.ar([sig1, sig2, sig3], 1.5, [Rand(0.5, 1.5), Rand(0.5, 1.5), Rand(0.5, 1.5)]);
 
 	LocalOut.ar([
-		TChoose.ar( Dust.ar(0.5), delay ),
-		TChoose.ar( Dust.ar(0.7), delay ),
-		TChoose.ar( Dust.ar(0.9), delay )
+		TWChoose.ar( Dust.ar(0.9), delay, [0.1, 0.45, 0.45] ),
+		TWChoose.ar( Dust.ar(1.1), delay, [0.45, 0.1, 0.45] ),
+		TWChoose.ar( Dust.ar(1.3), delay, [0.45, 0.45, 0.1] )
 	]);
 
 	Out.ar(out, Pan4.ar(sig1, -1, -0.5) + Pan4.ar(sig2, 0, 1) + Pan4.ar(sig3, 1, -0.5));
@@ -147,7 +126,7 @@ SynthDef(\perf_2_pad, {|pan = 0, gate = 0, out = 0|
 	//350
 	osc = BPF.ar(Mix.ar(
 		SinOsc.ar((WhiteNoise.ar(0.2) + TRand.kr(250, 400,
-		Changed.kr(gate))) * [0.5, 0.98, 1, 1.01,  2, 2.02, 4], mul: 0.5)), 350, Dust.kr(5, 0.05, 0.09), 5).clip(-1, 1);
+			Latch.kr(gate, Changed.kr(gate)))) * [0.5, 0.98, 1, 1.01,  2, 2.02, 4], mul: 0.5)), 350, Dust.kr(5, 0.05, 0.09), 5).clip(-1, 1);
 	/*osc = BPF.ar(WhiteNoise.ar(0.5), Latch.ar(700 * SinOsc.kr(0.01, mul:0.02, add: 1), Dust.kr(0.3)), 0.05);*/
 
 	env = EnvGen.kr(Env.adsr(3, curve:5), gate, doneAction: 0);
