@@ -13,8 +13,10 @@ Server.local.options.device_("AudioBox USB");
 
 s.scope;
 
-~netDel[0].set(\scale, 1);
-~netDel[1].set(\scale, 1);
-~netDel[2].set(\scale, 1);
+~netDel[0].set(\scale, 0);
+~netDel[1].set(\scale, 0);
+~netDel[2].set(\scale, 0);
+
+~netDel.set(\scale, 0);
 
 1.9.asInteger%2

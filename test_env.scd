@@ -2,6 +2,8 @@
 // pre-initialize data tracking space
 var performerData = performerData ? ();
 
+performerData.active = false;
+
 performerData.perf1 = performerData.perf1 ? ();
 performerData.perf1.trig1 = performerData.perf1.trig1 ? ();
 performerData.perf1.trig2 = performerData.perf1.trig2 ? ();
@@ -83,16 +85,19 @@ performerData.perf3.trig4.offDurations = List.new(10);
 
 
 
+Server.local.options.outDevice_("Fieldcuts_Aggregate");
+//Server.local.options.outDevice_("AudioBox USB");
+
+s.boot;
 
 // load program modules (gui and synth defs)
-(thisProcess.nowExecutingPath.dirname +/+ "fieldcuts*.scd").loadPaths;
-
+s.doWhenBooted({(thisProcess.nowExecutingPath.dirname +/+ "fieldcuts*.scd").loadPaths;
 
 
 
 
 // execute other code
-~outputBus = Bus.audio(s, 2);
+~outputBus = Bus.audio(s, 4);
 
 ~delayBus = [Bus.audio(s), Bus.audio(s), Bus.audio(s)];
 ~master = Synth(\master, [\in, ~outputBus.index]);
@@ -126,9 +131,13 @@ performerData.perf3.trig4.offDurations = List.new(10);
 	])
 ];*/
 
-~perf_1 = Synth(\perf_1_pad, [\pan, 1, \out, ~delayBus[0].index]);
-~perf_2 = Synth(\perf_2_pad, [\pan, 0, \out, ~delayBus[1].index]);
-~perf_3 = Synth(\perf_3_pad, [\pan, -1, \out, ~delayBus[2].index]);
+//~perf_1 = Synth(\perf_1_pad, [\xpos, -1, \ypos, 0.5, \out, ~delayBus[0].index]);
+//~perf_2 = Synth(\perf_2_pad, [\xpos, 0, \ypos, 1,  \out, ~delayBus[1].index]);
+//~perf_3 = Synth(\perf_3_pad, [\xpos, 1, \ypos, 0.5,  \out, ~delayBus[2].index]);
+
+~perf_1 = Synth(\perf_1_pad, [\out, ~delayBus[0].index]);
+~perf_2 = Synth(\perf_2_pad, [\out, ~delayBus[1].index]);
+~perf_3 = Synth(\perf_3_pad, [\out, ~delayBus[2].index]);
 
 OSCFunc({ |msg, time, addr, recvPort|
 	var x = case
@@ -137,6 +146,11 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf1.trig1.state == false, {
 				performerData.perf1.trig1.state = true;
 				if(performerData.perf1.trig1.timestamp.notNil, {
@@ -174,13 +188,18 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\pan, 1, \out, ~outputBus.index]);
+		Synth(\trig_1, [\xpos, -1, \ypos, -0.5, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_2} {
 		("perf_1 -> trig_2 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf1.trig2.state == false, {
 				performerData.perf1.trig2.state = true;
 				if(performerData.perf1.trig2.timestamp.notNil, {
@@ -218,13 +237,18 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\pan, 1, \out, ~outputBus.index]);
+		Synth(\trig_2, [\xpos, -1, \ypos, -0.5, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_3} {
 		("perf_1 -> trig_3 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf1.trig3.state == false, {
 				performerData.perf1.trig3.state = true;
 				if(performerData.perf1.trig3.timestamp.notNil, {
@@ -263,13 +287,18 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\pan, 1, \out, ~outputBus.index]);
+		Synth(\trig_3, [\xpos, -1, \ypos, -0.5, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_4} {
 		("perf_1 -> trig_4 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf1.trig4.state == false, {
 				performerData.perf1.trig4.state = true;
 				if(performerData.perf1.trig4.timestamp.notNil, {
@@ -308,7 +337,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\pan, 1, \out, ~outputBus.index]);
+		Synth(\trig_4, [\xpos, -1, \ypos, -0.5, \out, ~outputBus.index]);
 	};
 
 	//x.postln;
@@ -321,6 +350,11 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf2.trig1.state == false, {
 				performerData.perf2.trig1.state = true;
 				if(performerData.perf2.trig1.timestamp.notNil, {
@@ -359,13 +393,18 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\pan, 0, \out, ~outputBus.index]);
+		Synth(\trig_1, [\xpos, 0, \ypos, 1, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_2} {
 		("perf_2 -> trig_2 " + msg[2]);
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf2.trig2.state == false, {
 				performerData.perf2.trig2.state = true;
 				if(performerData.perf2.trig2.timestamp.notNil, {
@@ -404,13 +443,18 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\pan, 0, \out, ~outputBus.index]);
+		Synth(\trig_2, [\xpos, 0, \ypos, 1, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_3} {
 		("perf_2 -> trig_3 " + msg[2]);
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf2.trig3.state == false, {
 				performerData.perf2.trig3.state = true;
 				if(performerData.perf2.trig3.timestamp.notNil, {
@@ -449,13 +493,18 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\pan, 0, \out, ~outputBus.index]);
+		Synth(\trig_3, [\xpos, 0, \ypos, 1, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_4} {
 		("perf_2 -> trig_4 " + msg[2]);
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf2.trig4.state == false, {
 				performerData.perf2.trig4.state = true;
 				if(performerData.perf2.trig4.timestamp.notNil, {
@@ -494,7 +543,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\pan, 0, \out, ~outputBus.index]);
+		Synth(\trig_4, [\xpos, 0, \ypos, 1, \out, ~outputBus.index]);
 	};
 
 	//x.postln;
@@ -507,6 +556,11 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf3.trig1.state == false, {
 				performerData.perf3.trig1.state = true;
 				if(performerData.perf3.trig1.timestamp.notNil, {
@@ -541,13 +595,18 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\pan, -1, \out, ~outputBus.index]);
+		Synth(\trig_1, [\xpos, 1, \ypos, -0.5, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_2} {
 		("contr -> trig_2 " + msg[2]);
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf3.trig2.state == false, {
 				performerData.perf3.trig2.state = true;
 				if(performerData.perf3.trig2.timestamp.notNil, {
@@ -582,13 +641,18 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\pan, -1, \out, ~outputBus.index]);
+		Synth(\trig_2, [\xpos, 1, \ypos, -0.5, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_3} {
 		("contr -> trig_3 " + msg[2]);
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf3.trig3.state == false, {
 				performerData.perf3.trig3.state = true;
 				if(performerData.perf3.trig3.timestamp.notNil, {
@@ -623,13 +687,18 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\pan, -1, \out, ~outputBus.index]);
+		Synth(\trig_3, [\xpos, 1, \ypos, -0.5, \out, ~outputBus.index]);
 	}
 	{msg[1] == \trig_4} {
 		("contr -> trig_4 " + msg[2]);
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
+				if(performerData.active == false, {
+					"activating delay".postln;
+					performerData.active = true;
+					~netDel.set(\scale, 1);
+				});
 			if(performerData.perf3.trig4.state == false, {
 				performerData.perf3.trig4.state = true;
 				if(performerData.perf3.trig4.timestamp.notNil, {
@@ -649,7 +718,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 		if(msg[2] == 'off', {
 			//"turning off".postln;
 			if(performerData.perf3.trig4.state == true, {
-				performerData.perf3.trig4.state = false;
+					performerData.perf3.trig4.state = false;
 				if(performerData.perf3.trig4.timestamp.notNil, {
 					if(performerData.perf3.trig4.onDurations.size == 10, {
 						performerData.perf3.trig4.onDurations.pop;
@@ -664,7 +733,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\pan, -1, \out, ~outputBus.index]);
+		Synth(\trig_4, [\xpos, 1, \ypos, -0.5, \out, ~outputBus.index]);
 	};
 
 	//x.postln;
@@ -678,4 +747,5 @@ OSCFunc({
 //	msg.postln;
 //}, '/');
 s.scope;
+});
 )
