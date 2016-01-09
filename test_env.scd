@@ -1,91 +1,91 @@
 (
 // pre-initialize data tracking space
-var performerData = performerData ? ();
+var perfData = perfData ? ();
 
-performerData.active = false;
+perfData.active = false;
 
-performerData.perf1 = performerData.perf1 ? ();
-performerData.perf1.trig1 = performerData.perf1.trig1 ? ();
-performerData.perf1.trig2 = performerData.perf1.trig2 ? ();
-performerData.perf1.trig3 = performerData.perf1.trig3 ? ();
-performerData.perf1.trig4 = performerData.perf1.trig4 ? ();
+perfData.perf1 = perfData.perf1 ? ();
+perfData.perf1.trig1 = perfData.perf1.trig1 ? ();
+perfData.perf1.trig2 = perfData.perf1.trig2 ? ();
+perfData.perf1.trig3 = perfData.perf1.trig3 ? ();
+perfData.perf1.trig4 = perfData.perf1.trig4 ? ();
 
-performerData.perf2 = performerData.perf2 ? ();
-performerData.perf2.trig1 = performerData.perf2.trig1 ? ();
-performerData.perf2.trig2 = performerData.perf2.trig2 ? ();
-performerData.perf2.trig3 = performerData.perf2.trig3 ? ();
-performerData.perf2.trig4 = performerData.perf2.trig4 ? ();
+perfData.perf2 = perfData.perf2 ? ();
+perfData.perf2.trig1 = perfData.perf2.trig1 ? ();
+perfData.perf2.trig2 = perfData.perf2.trig2 ? ();
+perfData.perf2.trig3 = perfData.perf2.trig3 ? ();
+perfData.perf2.trig4 = perfData.perf2.trig4 ? ();
 
-performerData.perf3 = performerData.perf3 ? ();
-performerData.perf3.trig1 = performerData.perf3.trig1 ? ();
-performerData.perf3.trig2 = performerData.perf3.trig2 ? ();
-performerData.perf3.trig3 = performerData.perf3.trig3 ? ();
-performerData.perf3.trig4 = performerData.perf3.trig4 ? ();
+perfData.perf3 = perfData.perf3 ? ();
+perfData.perf3.trig1 = perfData.perf3.trig1 ? ();
+perfData.perf3.trig2 = perfData.perf3.trig2 ? ();
+perfData.perf3.trig3 = perfData.perf3.trig3 ? ();
+perfData.perf3.trig4 = perfData.perf3.trig4 ? ();
 
-performerData.perf1.trig1.timestamp = nil;
-performerData.perf1.trig1.state = false;
-performerData.perf1.trig1.onDurations = List.new(10);
-performerData.perf1.trig1.offDurations = List.new(10);
+perfData.perf1.trig1.timestamp = nil;
+perfData.perf1.trig1.state = false;
+perfData.perf1.trig1.onDur = List.new(10);
+perfData.perf1.trig1.offDur = List.new(10);
 
-performerData.perf1.trig2.timestamp = nil;
-performerData.perf1.trig2.state = false;
-performerData.perf1.trig2.onDurations = List.new(10);
-performerData.perf1.trig2.offDurations = List.new(10);
+perfData.perf1.trig2.timestamp = nil;
+perfData.perf1.trig2.state = false;
+perfData.perf1.trig2.onDur = List.new(10);
+perfData.perf1.trig2.offDur = List.new(10);
 
-performerData.perf1.trig3.timestamp = nil;
-performerData.perf1.trig3.state = false;
-performerData.perf1.trig3.onDurations = List.new(10);
-performerData.perf1.trig3.offDurations = List.new(10);
+perfData.perf1.trig3.timestamp = nil;
+perfData.perf1.trig3.state = false;
+perfData.perf1.trig3.onDur = List.new(10);
+perfData.perf1.trig3.offDur = List.new(10);
 
-performerData.perf1.trig4.timestamp = nil;
-performerData.perf1.trig4.state = false;
-performerData.perf1.trig4.onDurations = List.new(10);
-performerData.perf1.trig4.offDurations = List.new(10);
+perfData.perf1.trig4.timestamp = nil;
+perfData.perf1.trig4.state = false;
+perfData.perf1.trig4.onDur = List.new(10);
+perfData.perf1.trig4.offDur = List.new(10);
 
-performerData.perf2.trig1.timestamp = nil;
-performerData.perf2.trig1.state = false;
-performerData.perf2.trig1.onDurations = List.new(10);
-performerData.perf2.trig1.offDurations = List.new(10);
+perfData.perf2.trig1.timestamp = nil;
+perfData.perf2.trig1.state = false;
+perfData.perf2.trig1.onDur = List.new(10);
+perfData.perf2.trig1.offDur = List.new(10);
 
-performerData.perf2.trig2.timestamp = nil;
-performerData.perf2.trig2.state = false;
-performerData.perf2.trig2.onDurations = List.new(10);
-performerData.perf2.trig2.offDurations = List.new(10);
+perfData.perf2.trig2.timestamp = nil;
+perfData.perf2.trig2.state = false;
+perfData.perf2.trig2.onDur = List.new(10);
+perfData.perf2.trig2.offDur = List.new(10);
 
-performerData.perf2.trig3.timestamp = nil;
-performerData.perf2.trig3.state = false;
-performerData.perf2.trig3.onDurations = List.new(10);
-performerData.perf2.trig3.offDurations = List.new(10);
+perfData.perf2.trig3.timestamp = nil;
+perfData.perf2.trig3.state = false;
+perfData.perf2.trig3.onDur = List.new(10);
+perfData.perf2.trig3.offDur = List.new(10);
 
-performerData.perf2.trig4.timestamp = nil;
-performerData.perf2.trig4.state = false;
-performerData.perf2.trig4.onDurations = List.new(10);
-performerData.perf2.trig4.offDurations = List.new(10);
+perfData.perf2.trig4.timestamp = nil;
+perfData.perf2.trig4.state = false;
+perfData.perf2.trig4.onDur = List.new(10);
+perfData.perf2.trig4.offDur = List.new(10);
 
-performerData.perf3.trig1.timestamp = nil;
-performerData.perf3.trig1.state = false;
-performerData.perf3.trig1.onDurations = List.new(10);
-performerData.perf3.trig1.offDurations = List.new(10);
+perfData.perf3.trig1.timestamp = nil;
+perfData.perf3.trig1.state = false;
+perfData.perf3.trig1.onDur = List.new(10);
+perfData.perf3.trig1.offDur = List.new(10);
 
-performerData.perf3.trig2.timestamp = nil;
-performerData.perf3.trig2.state = false;
-performerData.perf3.trig2.onDurations = List.new(10);
-performerData.perf3.trig2.offDurations = List.new(10);
+perfData.perf3.trig2.timestamp = nil;
+perfData.perf3.trig2.state = false;
+perfData.perf3.trig2.onDur = List.new(10);
+perfData.perf3.trig2.offDur = List.new(10);
 
-performerData.perf3.trig3.timestamp = nil;
-performerData.perf3.trig3.state = false;
-performerData.perf3.trig3.onDurations = List.new(10);
-performerData.perf3.trig3.offDurations = List.new(10);
+perfData.perf3.trig3.timestamp = nil;
+perfData.perf3.trig3.state = false;
+perfData.perf3.trig3.onDur = List.new(10);
+perfData.perf3.trig3.offDur = List.new(10);
 
-performerData.perf3.trig4.timestamp = nil;
-performerData.perf3.trig4.state = false;
-performerData.perf3.trig4.onDurations = List.new(10);
-performerData.perf3.trig4.offDurations = List.new(10);
-
-
+perfData.perf3.trig4.timestamp = nil;
+perfData.perf3.trig4.state = false;
+perfData.perf3.trig4.onDur = List.new(10);
+perfData.perf3.trig4.offDur = List.new(10);
 
 
-Server.local.options.outDevice_("Fieldcuts_Aggregate");
+
+
+Server.local.options.outDevice_("HDSPe MADIface (22802690)");
 //Server.local.options.outDevice_("AudioBox USB");
 
 s.boot;
@@ -149,24 +149,24 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf1.trig1.state == false, {
-				performerData.perf1.trig1.state = true;
-				if(performerData.perf1.trig1.timestamp.notNil, {
-					if(performerData.perf1.trig1.offDurations.size == 10, {
-						performerData.perf1.trig1.offDurations.pop;
+			if(perfData.perf1.trig1.state == false, {
+				perfData.perf1.trig1.state = true;
+				if(perfData.perf1.trig1.timestamp.notNil, {
+					if(perfData.perf1.trig1.offDur.size == 10, {
+						perfData.perf1.trig1.offDur.pop;
 					});
-					performerData.perf1.trig1.offDurations.addFirst(
-						time - performerData.perf1.trig1.timestamp
+					perfData.perf1.trig1.offDur.addFirst(
+						time - perfData.perf1.trig1.timestamp
 					);
 					"P1, T1, ON :: ".post;
-					performerData.perf1.trig1.offDurations.postln;
+					perfData.perf1.trig1.offDur.postln;
 				});
-				performerData.perf1.trig1.timestamp = time;
+				perfData.perf1.trig1.timestamp = time;
 
 				~perf_1.set(\gate, 1);
 			});
@@ -174,19 +174,19 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf1.trig1.state == true, {
-				performerData.perf1.trig1.state = false;
-				if(performerData.perf1.trig1.timestamp.notNil, {
-					if(performerData.perf1.trig1.onDurations.size == 10, {
-						performerData.perf1.trig1.onDurations.pop;
+			if(perfData.perf1.trig1.state == true, {
+				perfData.perf1.trig1.state = false;
+				if(perfData.perf1.trig1.timestamp.notNil, {
+					if(perfData.perf1.trig1.onDur.size == 10, {
+						perfData.perf1.trig1.onDur.pop;
 					});
-					performerData.perf1.trig1.onDurations.addFirst(
-						time - performerData.perf1.trig1.timestamp
+					perfData.perf1.trig1.onDur.addFirst(
+						time - perfData.perf1.trig1.timestamp
 					);
 					"P1, T1, OFF :: ".post;
-					performerData.perf1.trig1.onDurations.postln;
+					perfData.perf1.trig1.onDur.postln;
 				});
-				performerData.perf1.trig1.timestamp = time;
+				perfData.perf1.trig1.timestamp = time;
 				~perf_1.set(\gate, 0);
 			});
 		});
@@ -198,24 +198,24 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf1.trig2.state == false, {
-				performerData.perf1.trig2.state = true;
-				if(performerData.perf1.trig2.timestamp.notNil, {
-					if(performerData.perf1.trig2.offDurations.size == 10, {
-						performerData.perf1.trig2.offDurations.pop;
+			if(perfData.perf1.trig2.state == false, {
+				perfData.perf1.trig2.state = true;
+				if(perfData.perf1.trig2.timestamp.notNil, {
+					if(perfData.perf1.trig2.offDur.size == 10, {
+						perfData.perf1.trig2.offDur.pop;
 					});
-					performerData.perf1.trig2.offDurations.addFirst(
-						time - performerData.perf1.trig2.timestamp
+					perfData.perf1.trig2.offDur.addFirst(
+						time - perfData.perf1.trig2.timestamp
 					);
 					"P1, T2, ON :: ".post;
-					performerData.perf1.trig2.offDurations.postln;
+					perfData.perf1.trig2.offDur.postln;
 				});
-				performerData.perf1.trig2.timestamp = time;
+				perfData.perf1.trig2.timestamp = time;
 
 				~perf_1.set(\gate, 1);
 			});
@@ -223,19 +223,19 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf1.trig2.state == true, {
-				performerData.perf1.trig2.state = false;
-				if(performerData.perf1.trig2.timestamp.notNil, {
-					if(performerData.perf1.trig2.onDurations.size == 10, {
-						performerData.perf1.trig2.onDurations.pop;
+			if(perfData.perf1.trig2.state == true, {
+				perfData.perf1.trig2.state = false;
+				if(perfData.perf1.trig2.timestamp.notNil, {
+					if(perfData.perf1.trig2.onDur.size == 10, {
+						perfData.perf1.trig2.onDur.pop;
 					});
-					performerData.perf1.trig2.onDurations.addFirst(
-						time - performerData.perf1.trig2.timestamp
+					perfData.perf1.trig2.onDur.addFirst(
+						time - perfData.perf1.trig2.timestamp
 					);
 					"P1, T2, OFF :: ".post;
-					performerData.perf1.trig2.onDurations.postln;
+					perfData.perf1.trig2.onDur.postln;
 				});
-				performerData.perf1.trig2.timestamp = time;
+				perfData.perf1.trig2.timestamp = time;
 				~perf_1.set(\gate, 0);
 			});
 		});
@@ -247,24 +247,24 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf1.trig3.state == false, {
-				performerData.perf1.trig3.state = true;
-				if(performerData.perf1.trig3.timestamp.notNil, {
-					if(performerData.perf1.trig3.offDurations.size == 10, {
-						performerData.perf1.trig3.offDurations.pop;
+			if(perfData.perf1.trig3.state == false, {
+				perfData.perf1.trig3.state = true;
+				if(perfData.perf1.trig3.timestamp.notNil, {
+					if(perfData.perf1.trig3.offDur.size == 10, {
+						perfData.perf1.trig3.offDur.pop;
 					});
-					performerData.perf1.trig3.offDurations.addFirst(
-						time - performerData.perf1.trig3.timestamp
+					perfData.perf1.trig3.offDur.addFirst(
+						time - perfData.perf1.trig3.timestamp
 					);
 					"P1, T3, ON :: ".post;
-					performerData.perf1.trig3.offDurations.postln;
+					perfData.perf1.trig3.offDur.postln;
 				});
-				performerData.perf1.trig3.timestamp = time;
+				perfData.perf1.trig3.timestamp = time;
 
 				~perf_1.set(\gate, 1);
 			});
@@ -272,19 +272,19 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf1.trig3.state == true, {
-				performerData.perf1.trig3.state = false;
-				if(performerData.perf1.trig3.timestamp.notNil, {
-					if(performerData.perf1.trig3.onDurations.size == 10, {
-						performerData.perf1.trig3.onDurations.pop;
+			if(perfData.perf1.trig3.state == true, {
+				perfData.perf1.trig3.state = false;
+				if(perfData.perf1.trig3.timestamp.notNil, {
+					if(perfData.perf1.trig3.onDur.size == 10, {
+						perfData.perf1.trig3.onDur.pop;
 					});
-					performerData.perf1.trig3.onDurations.addFirst(
-						time - performerData.perf1.trig3.timestamp
+					perfData.perf1.trig3.onDur.addFirst(
+						time - perfData.perf1.trig3.timestamp
 					);
 					"P1, T3, OFF :: ".post;
-					performerData.perf1.trig3.onDurations.postln;
+					perfData.perf1.trig3.onDur.postln;
 				});
-				performerData.perf1.trig3.timestamp = time;
+				perfData.perf1.trig3.timestamp = time;
 
 				~perf_1.set(\gate, 0);
 			});
@@ -297,24 +297,24 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf1.trig4.state == false, {
-				performerData.perf1.trig4.state = true;
-				if(performerData.perf1.trig4.timestamp.notNil, {
-					if(performerData.perf1.trig4.offDurations.size == 10, {
-						performerData.perf1.trig4.offDurations.pop;
+			if(perfData.perf1.trig4.state == false, {
+				perfData.perf1.trig4.state = true;
+				if(perfData.perf1.trig4.timestamp.notNil, {
+					if(perfData.perf1.trig4.offDur.size == 10, {
+						perfData.perf1.trig4.offDur.pop;
 					});
-					performerData.perf1.trig4.offDurations.addFirst(
-						time - performerData.perf1.trig4.timestamp
+					perfData.perf1.trig4.offDur.addFirst(
+						time - perfData.perf1.trig4.timestamp
 					);
 					"P1, T4, ON :: ".post;
-					performerData.perf1.trig4.offDurations.postln;
+					perfData.perf1.trig4.offDur.postln;
 				});
-				performerData.perf1.trig4.timestamp = time;
+				perfData.perf1.trig4.timestamp = time;
 
 				~perf_1.set(\gate, 1);
 			});
@@ -322,19 +322,19 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf1.trig4.state == true, {
-				performerData.perf1.trig4.state = false;
-				if(performerData.perf1.trig4.timestamp.notNil, {
-					if(performerData.perf1.trig4.onDurations.size == 10, {
-						performerData.perf1.trig4.onDurations.pop;
+			if(perfData.perf1.trig4.state == true, {
+				perfData.perf1.trig4.state = false;
+				if(perfData.perf1.trig4.timestamp.notNil, {
+					if(perfData.perf1.trig4.onDur.size == 10, {
+						perfData.perf1.trig4.onDur.pop;
 					});
-					performerData.perf1.trig4.onDurations.addFirst(
-						time - performerData.perf1.trig4.timestamp
+					perfData.perf1.trig4.onDur.addFirst(
+						time - perfData.perf1.trig4.timestamp
 					);
 					"P1, T4, OFF :: ".post;
-					performerData.perf1.trig4.onDurations.postln;
+					perfData.perf1.trig4.onDur.postln;
 				});
-				performerData.perf1.trig4.timestamp = time;
+				perfData.perf1.trig4.timestamp = time;
 
 				~perf_1.set(\gate, 0);
 			});
@@ -353,24 +353,24 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf2.trig1.state == false, {
-				performerData.perf2.trig1.state = true;
-				if(performerData.perf2.trig1.timestamp.notNil, {
-					if(performerData.perf2.trig1.offDurations.size == 10, {
-						performerData.perf2.trig1.offDurations.pop;
+			if(perfData.perf2.trig1.state == false, {
+				perfData.perf2.trig1.state = true;
+				if(perfData.perf2.trig1.timestamp.notNil, {
+					if(perfData.perf2.trig1.offDur.size == 10, {
+						perfData.perf2.trig1.offDur.pop;
 					});
-					performerData.perf2.trig1.offDurations.addFirst(
-						time - performerData.perf2.trig1.timestamp
+					perfData.perf2.trig1.offDur.addFirst(
+						time - perfData.perf2.trig1.timestamp
 					);
 					"P2, T1, ON :: ".post;
-					performerData.perf2.trig1.offDurations.postln;
+					perfData.perf2.trig1.offDur.postln;
 				});
-				performerData.perf2.trig1.timestamp = time;
+				perfData.perf2.trig1.timestamp = time;
 
 				~perf_2.set(\gate, 1);
 			});
@@ -378,19 +378,19 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf2.trig1.state == true, {
-				performerData.perf2.trig1.state = false;
-				if(performerData.perf2.trig1.timestamp.notNil, {
-					if(performerData.perf2.trig1.onDurations.size == 10, {
-						performerData.perf2.trig1.onDurations.pop;
+			if(perfData.perf2.trig1.state == true, {
+				perfData.perf2.trig1.state = false;
+				if(perfData.perf2.trig1.timestamp.notNil, {
+					if(perfData.perf2.trig1.onDur.size == 10, {
+						perfData.perf2.trig1.onDur.pop;
 					});
-					performerData.perf2.trig1.onDurations.addFirst(
-						time - performerData.perf2.trig1.timestamp
+					perfData.perf2.trig1.onDur.addFirst(
+						time - perfData.perf2.trig1.timestamp
 					);
 					"P2, T1, OFF :: ".post;
-					performerData.perf2.trig1.onDurations.postln;
+					perfData.perf2.trig1.onDur.postln;
 				});
-				performerData.perf2.trig1.timestamp = time;
+				perfData.perf2.trig1.timestamp = time;
 
 				~perf_2.set(\gate, 0);
 			});
@@ -403,24 +403,24 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf2.trig2.state == false, {
-				performerData.perf2.trig2.state = true;
-				if(performerData.perf2.trig2.timestamp.notNil, {
-					if(performerData.perf2.trig2.offDurations.size == 10, {
-						performerData.perf2.trig2.offDurations.pop;
+			if(perfData.perf2.trig2.state == false, {
+				perfData.perf2.trig2.state = true;
+				if(perfData.perf2.trig2.timestamp.notNil, {
+					if(perfData.perf2.trig2.offDur.size == 10, {
+						perfData.perf2.trig2.offDur.pop;
 					});
-					performerData.perf2.trig2.offDurations.addFirst(
-						time - performerData.perf2.trig2.timestamp
+					perfData.perf2.trig2.offDur.addFirst(
+						time - perfData.perf2.trig2.timestamp
 					);
 					"P2, T2, ON :: ".post;
-					performerData.perf2.trig2.offDurations.postln;
+					perfData.perf2.trig2.offDur.postln;
 				});
-				performerData.perf2.trig2.timestamp = time;
+				perfData.perf2.trig2.timestamp = time;
 
 				~perf_2.set(\gate, 1);
 			});
@@ -428,19 +428,19 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf2.trig2.state == true, {
-				performerData.perf2.trig2.state = false;
-				if(performerData.perf2.trig2.timestamp.notNil, {
-					if(performerData.perf2.trig2.onDurations.size == 10, {
-						performerData.perf2.trig2.onDurations.pop;
+			if(perfData.perf2.trig2.state == true, {
+				perfData.perf2.trig2.state = false;
+				if(perfData.perf2.trig2.timestamp.notNil, {
+					if(perfData.perf2.trig2.onDur.size == 10, {
+						perfData.perf2.trig2.onDur.pop;
 					});
-					performerData.perf2.trig2.onDurations.addFirst(
-						time - performerData.perf2.trig2.timestamp
+					perfData.perf2.trig2.onDur.addFirst(
+						time - perfData.perf2.trig2.timestamp
 					);
 					"P2, T2, OFF :: ".post;
-					performerData.perf2.trig2.onDurations.postln;
+					perfData.perf2.trig2.onDur.postln;
 				});
-				performerData.perf2.trig2.timestamp = time;
+				perfData.perf2.trig2.timestamp = time;
 
 				~perf_2.set(\gate, 0);
 			});
@@ -453,24 +453,24 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf2.trig3.state == false, {
-				performerData.perf2.trig3.state = true;
-				if(performerData.perf2.trig3.timestamp.notNil, {
-					if(performerData.perf2.trig3.offDurations.size == 10, {
-						performerData.perf2.trig3.offDurations.pop;
+			if(perfData.perf2.trig3.state == false, {
+				perfData.perf2.trig3.state = true;
+				if(perfData.perf2.trig3.timestamp.notNil, {
+					if(perfData.perf2.trig3.offDur.size == 10, {
+						perfData.perf2.trig3.offDur.pop;
 					});
-					performerData.perf2.trig3.offDurations.addFirst(
-						time - performerData.perf2.trig3.timestamp
+					perfData.perf2.trig3.offDur.addFirst(
+						time - perfData.perf2.trig3.timestamp
 					);
 					"P2, T3, ON :: ".post;
-					performerData.perf2.trig3.offDurations.postln;
+					perfData.perf2.trig3.offDur.postln;
 				});
-				performerData.perf2.trig3.timestamp = time;
+				perfData.perf2.trig3.timestamp = time;
 
 				~perf_2.set(\gate, 1);
 			});
@@ -478,19 +478,19 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf2.trig3.state == true, {
-				performerData.perf2.trig3.state = false;
-				if(performerData.perf2.trig3.timestamp.notNil, {
-					if(performerData.perf2.trig3.onDurations.size == 10, {
-						performerData.perf2.trig3.onDurations.pop;
+			if(perfData.perf2.trig3.state == true, {
+				perfData.perf2.trig3.state = false;
+				if(perfData.perf2.trig3.timestamp.notNil, {
+					if(perfData.perf2.trig3.onDur.size == 10, {
+						perfData.perf2.trig3.onDur.pop;
 					});
-					performerData.perf2.trig3.onDurations.addFirst(
-						time - performerData.perf2.trig3.timestamp
+					perfData.perf2.trig3.onDur.addFirst(
+						time - perfData.perf2.trig3.timestamp
 					);
 					"P2, T3, OFF :: ".post;
-					performerData.perf2.trig3.onDurations.postln;
+					perfData.perf2.trig3.onDur.postln;
 				});
-				performerData.perf2.trig3.timestamp = time;
+				perfData.perf2.trig3.timestamp = time;
 
 				~perf_2.set(\gate, 0);
 			});
@@ -503,24 +503,24 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf2.trig4.state == false, {
-				performerData.perf2.trig4.state = true;
-				if(performerData.perf2.trig4.timestamp.notNil, {
-					if(performerData.perf2.trig4.offDurations.size == 10, {
-						performerData.perf2.trig4.offDurations.pop;
+			if(perfData.perf2.trig4.state == false, {
+				perfData.perf2.trig4.state = true;
+				if(perfData.perf2.trig4.timestamp.notNil, {
+					if(perfData.perf2.trig4.offDur.size == 10, {
+						perfData.perf2.trig4.offDur.pop;
 					});
-					performerData.perf2.trig4.offDurations.addFirst(
-						time - performerData.perf2.trig4.timestamp
+					perfData.perf2.trig4.offDur.addFirst(
+						time - perfData.perf2.trig4.timestamp
 					);
 					"P2, T4, ON :: ".post;
-					performerData.perf2.trig4.offDurations.postln;
+					perfData.perf2.trig4.offDur.postln;
 				});
-				performerData.perf2.trig4.timestamp = time;
+				perfData.perf2.trig4.timestamp = time;
 
 				~perf_2.set(\gate, 1);
 			});
@@ -528,19 +528,19 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf2.trig4.state == true, {
-				performerData.perf2.trig4.state = false;
-				if(performerData.perf2.trig4.timestamp.notNil, {
-					if(performerData.perf2.trig4.onDurations.size == 10, {
-						performerData.perf2.trig4.onDurations.pop;
+			if(perfData.perf2.trig4.state == true, {
+				perfData.perf2.trig4.state = false;
+				if(perfData.perf2.trig4.timestamp.notNil, {
+					if(perfData.perf2.trig4.onDur.size == 10, {
+						perfData.perf2.trig4.onDur.pop;
 					});
-					performerData.perf2.trig4.onDurations.addFirst(
-						time - performerData.perf2.trig4.timestamp
+					perfData.perf2.trig4.onDur.addFirst(
+						time - perfData.perf2.trig4.timestamp
 					);
 					"P2, T4, OFF :: ".post;
-					performerData.perf2.trig4.onDurations.postln;
+					perfData.perf2.trig4.onDur.postln;
 				});
-				performerData.perf2.trig4.timestamp = time;
+				perfData.perf2.trig4.timestamp = time;
 
 				~perf_2.set(\gate, 0);
 			});
@@ -559,22 +559,22 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf3.trig1.state == false, {
-				performerData.perf3.trig1.state = true;
-				if(performerData.perf3.trig1.timestamp.notNil, {
-					if(performerData.perf3.trig1.offDurations.size == 10, {
-						performerData.perf3.trig1.offDurations.pop;
+			if(perfData.perf3.trig1.state == false, {
+				perfData.perf3.trig1.state = true;
+				if(perfData.perf3.trig1.timestamp.notNil, {
+					if(perfData.perf3.trig1.offDur.size == 10, {
+						perfData.perf3.trig1.offDur.pop;
 					});
-					performerData.perf3.trig1.offDurations.addFirst(
-						time - performerData.perf3.trig1.timestamp
+					perfData.perf3.trig1.offDur.addFirst(
+						time - perfData.perf3.trig1.timestamp
 					)
 				});
-				performerData.perf3.trig1.timestamp = time;
+				perfData.perf3.trig1.timestamp = time;
 
 				~perf_3.set(\gate, 1);
 			});
@@ -582,17 +582,17 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf3.trig1.state == true, {
-				performerData.perf3.trig1.state = false;
-				if(performerData.perf3.trig1.timestamp.notNil, {
-					if(performerData.perf3.trig1.onDurations.size == 10, {
-						performerData.perf3.trig1.onDurations.pop;
+			if(perfData.perf3.trig1.state == true, {
+				perfData.perf3.trig1.state = false;
+				if(perfData.perf3.trig1.timestamp.notNil, {
+					if(perfData.perf3.trig1.onDur.size == 10, {
+						perfData.perf3.trig1.onDur.pop;
 					});
-					performerData.perf3.trig1.onDurations.addFirst(
-						time - performerData.perf3.trig1.timestamp
+					perfData.perf3.trig1.onDur.addFirst(
+						time - perfData.perf3.trig1.timestamp
 					)
 				});
-				performerData.perf3.trig1.timestamp = time;
+				perfData.perf3.trig1.timestamp = time;
 
 				~perf_3.set(\gate, 0);
 			});
@@ -605,22 +605,22 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf3.trig2.state == false, {
-				performerData.perf3.trig2.state = true;
-				if(performerData.perf3.trig2.timestamp.notNil, {
-					if(performerData.perf3.trig2.offDurations.size == 10, {
-						performerData.perf3.trig2.offDurations.pop;
+			if(perfData.perf3.trig2.state == false, {
+				perfData.perf3.trig2.state = true;
+				if(perfData.perf3.trig2.timestamp.notNil, {
+					if(perfData.perf3.trig2.offDur.size == 10, {
+						perfData.perf3.trig2.offDur.pop;
 					});
-					performerData.perf3.trig2.offDurations.addFirst(
-						time - performerData.perf3.trig2.timestamp
+					perfData.perf3.trig2.offDur.addFirst(
+						time - perfData.perf3.trig2.timestamp
 					)
 				});
-				performerData.perf3.trig2.timestamp = time;
+				perfData.perf3.trig2.timestamp = time;
 
 				~perf_3.set(\gate, 1);
 			});
@@ -628,17 +628,17 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf3.trig2.state == true, {
-				performerData.perf3.trig2.state = false;
-				if(performerData.perf3.trig2.timestamp.notNil, {
-					if(performerData.perf3.trig2.onDurations.size == 10, {
-						performerData.perf3.trig2.onDurations.pop;
+			if(perfData.perf3.trig2.state == true, {
+				perfData.perf3.trig2.state = false;
+				if(perfData.perf3.trig2.timestamp.notNil, {
+					if(perfData.perf3.trig2.onDur.size == 10, {
+						perfData.perf3.trig2.onDur.pop;
 					});
-					performerData.perf3.trig2.onDurations.addFirst(
-						time - performerData.perf3.trig2.timestamp
+					perfData.perf3.trig2.onDur.addFirst(
+						time - perfData.perf3.trig2.timestamp
 					)
 				});
-				performerData.perf3.trig2.timestamp = time;
+				perfData.perf3.trig2.timestamp = time;
 
 				~perf_3.set(\gate, 0);
 			});
@@ -651,22 +651,22 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf3.trig3.state == false, {
-				performerData.perf3.trig3.state = true;
-				if(performerData.perf3.trig3.timestamp.notNil, {
-					if(performerData.perf3.trig3.offDurations.size == 10, {
-						performerData.perf3.trig3.offDurations.pop;
+			if(perfData.perf3.trig3.state == false, {
+				perfData.perf3.trig3.state = true;
+				if(perfData.perf3.trig3.timestamp.notNil, {
+					if(perfData.perf3.trig3.offDur.size == 10, {
+						perfData.perf3.trig3.offDur.pop;
 					});
-					performerData.perf3.trig3.offDurations.addFirst(
-						time - performerData.perf3.trig3.timestamp
+					perfData.perf3.trig3.offDur.addFirst(
+						time - perfData.perf3.trig3.timestamp
 					)
 				});
-				performerData.perf3.trig3.timestamp = time;
+				perfData.perf3.trig3.timestamp = time;
 
 				~perf_3.set(\gate, 1);
 			});
@@ -674,17 +674,17 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf3.trig3.state == true, {
-				performerData.perf3.trig3.state = false;
-				if(performerData.perf3.trig3.timestamp.notNil, {
-					if(performerData.perf3.trig3.onDurations.size == 10, {
-						performerData.perf3.trig3.onDurations.pop;
+			if(perfData.perf3.trig3.state == true, {
+				perfData.perf3.trig3.state = false;
+				if(perfData.perf3.trig3.timestamp.notNil, {
+					if(perfData.perf3.trig3.onDur.size == 10, {
+						perfData.perf3.trig3.onDur.pop;
 					});
-					performerData.perf3.trig3.onDurations.addFirst(
-						time - performerData.perf3.trig3.timestamp
+					perfData.perf3.trig3.onDur.addFirst(
+						time - perfData.perf3.trig3.timestamp
 					)
 				});
-				performerData.perf3.trig3.timestamp = time;
+				perfData.perf3.trig3.timestamp = time;
 
 				~perf_3.set(\gate, 0);
 			});
@@ -697,22 +697,22 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
-				if(performerData.active == false, {
+				if(perfData.active == false, {
 					"activating delay".postln;
-					performerData.active = true;
+					perfData.active = true;
 					~netDel.set(\scale, 1);
 				});
-			if(performerData.perf3.trig4.state == false, {
-				performerData.perf3.trig4.state = true;
-				if(performerData.perf3.trig4.timestamp.notNil, {
-					if(performerData.perf3.trig4.offDurations.size == 10, {
-						performerData.perf3.trig4.offDurations.pop;
+			if(perfData.perf3.trig4.state == false, {
+				perfData.perf3.trig4.state = true;
+				if(perfData.perf3.trig4.timestamp.notNil, {
+					if(perfData.perf3.trig4.offDur.size == 10, {
+						perfData.perf3.trig4.offDur.pop;
 					});
-					performerData.perf3.trig4.offDurations.addFirst(
-						time - performerData.perf3.trig4.timestamp
+					perfData.perf3.trig4.offDur.addFirst(
+						time - perfData.perf3.trig4.timestamp
 					)
 				});
-				performerData.perf3.trig4.timestamp = time;
+				perfData.perf3.trig4.timestamp = time;
 
 				~perf_3.set(\gate, 1);
 			});
@@ -720,17 +720,17 @@ OSCFunc({ |msg, time, addr, recvPort|
 
 		if(msg[2] == 'off', {
 			//"turning off".postln;
-			if(performerData.perf3.trig4.state == true, {
-					performerData.perf3.trig4.state = false;
-				if(performerData.perf3.trig4.timestamp.notNil, {
-					if(performerData.perf3.trig4.onDurations.size == 10, {
-						performerData.perf3.trig4.onDurations.pop;
+			if(perfData.perf3.trig4.state == true, {
+					perfData.perf3.trig4.state = false;
+				if(perfData.perf3.trig4.timestamp.notNil, {
+					if(perfData.perf3.trig4.onDur.size == 10, {
+						perfData.perf3.trig4.onDur.pop;
 					});
-					performerData.perf3.trig4.onDurations.addFirst(
-						time - performerData.perf3.trig4.timestamp
+					perfData.perf3.trig4.onDur.addFirst(
+						time - perfData.perf3.trig4.timestamp
 					)
 				});
-				performerData.perf3.trig4.timestamp = time;
+				perfData.perf3.trig4.timestamp = time;
 
 				~perf_3.set(\gate, 0);
 			});
