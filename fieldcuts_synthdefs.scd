@@ -190,10 +190,12 @@ SynthDef(\perf_4_pad, {|pan = 0, gate = 0, out = 0|
 SynthDef(\perf_5_pad, {|pan = 0, gate = 0, out = 0|
 	var freq, osc, env, sig;
 
-	freq = TChoose.kr(Changed.kr(gate),[0, 2, 3, 5]) + (12 * 3);
+	freq = TRand.kr(0.01, 0.15, Latch.kr(gate, Changed.kr(gate)));
 
 	//osc = Mix.ar(SinOsc.ar(410 * [0.5, 0.98, 1, 1.01,  2, 4], mul: 0.05));
-	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, 0, 0.8), freq.midicps)).clip(-1, 1);
+	//osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, 0, 0.8), freq.midicps)).clip(-1, 1);
+
+	osc = (NTube.ar(PinkNoise.ar*SinOsc.ar(0.25),`[0.97,1.0,1.0,1.0,1.0,0.97],`[0.5,   0.9   ,0.2,-0.4],`([0.01,0.02,0.01,0.005,0.05]*freq))*0.1).dup;
 
 	env = EnvGen.kr(Env.adsr(3, curve:8), gate, doneAction: 0);
 
