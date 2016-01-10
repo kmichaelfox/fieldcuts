@@ -22,6 +22,18 @@ perfData.perf3.trig2 = perfData.perf3.trig2 ? ();
 perfData.perf3.trig3 = perfData.perf3.trig3 ? ();
 perfData.perf3.trig4 = perfData.perf3.trig4 ? ();
 
+perfData.perf4 = perfData.perf4 ? ();
+perfData.perf4.trig1 = perfData.perf4.trig1 ? ();
+perfData.perf4.trig2 = perfData.perf4.trig2 ? ();
+perfData.perf4.trig3 = perfData.perf4.trig3 ? ();
+perfData.perf4.trig4 = perfData.perf4.trig4 ? ();
+
+perfData.perf5 = perfData.perf5 ? ();
+perfData.perf5.trig1 = perfData.perf5.trig1 ? ();
+perfData.perf5.trig2 = perfData.perf5.trig2 ? ();
+perfData.perf5.trig3 = perfData.perf5.trig3 ? ();
+perfData.perf5.trig4 = perfData.perf5.trig4 ? ();
+
 perfData.perf1.trig1.timestamp = nil;
 perfData.perf1.trig1.state = false;
 perfData.perf1.trig1.onDur = List.new(10);
@@ -82,10 +94,51 @@ perfData.perf3.trig4.state = false;
 perfData.perf3.trig4.onDur = List.new(10);
 perfData.perf3.trig4.offDur = List.new(10);
 
+perfData.perf4.trig1.timestamp = nil;
+perfData.perf4.trig1.state = false;
+perfData.perf4.trig1.onDur = List.new(10);
+perfData.perf4.trig1.offDur = List.new(10);
+
+perfData.perf4.trig2.timestamp = nil;
+perfData.perf4.trig2.state = false;
+perfData.perf4.trig2.onDur = List.new(10);
+perfData.perf4.trig2.offDur = List.new(10);
+
+perfData.perf4.trig3.timestamp = nil;
+perfData.perf4.trig3.state = false;
+perfData.perf4.trig3.onDur = List.new(10);
+perfData.perf4.trig3.offDur = List.new(10);
+
+perfData.perf4.trig4.timestamp = nil;
+perfData.perf4.trig4.state = false;
+perfData.perf4.trig4.onDur = List.new(10);
+perfData.perf4.trig4.offDur = List.new(10);
+
+perfData.perf5.trig1.timestamp = nil;
+perfData.perf5.trig1.state = false;
+perfData.perf5.trig1.onDur = List.new(10);
+perfData.perf5.trig1.offDur = List.new(10);
+
+perfData.perf5.trig2.timestamp = nil;
+perfData.perf5.trig2.state = false;
+perfData.perf5.trig2.onDur = List.new(10);
+perfData.perf5.trig2.offDur = List.new(10);
+
+perfData.perf5.trig3.timestamp = nil;
+perfData.perf5.trig3.state = false;
+perfData.perf5.trig3.onDur = List.new(10);
+perfData.perf5.trig3.offDur = List.new(10);
+
+perfData.perf5.trig4.timestamp = nil;
+perfData.perf5.trig4.state = false;
+perfData.perf5.trig4.onDur = List.new(10);
+perfData.perf5.trig4.offDur = List.new(10);
+
 
 
 
 Server.local.options.outDevice_("HDSPe MADIface (22802690)");
+Server.local.options.numOutputBusChannels(9);
 //Server.local.options.outDevice_("AudioBox USB");
 
 s.boot;
@@ -100,14 +153,16 @@ s.doWhenBooted({
 
 
 // execute other code
-~outputBus = Bus.audio(s, 4);
+~outputBus = Bus.audio(s, 9);
 
-~delayBus = [Bus.audio(s), Bus.audio(s), Bus.audio(s)];
+~delayBus = [Bus.audio(s), Bus.audio(s), Bus.audio(s), Bus.audio(s), Bus.audio(s)];
 ~master = Synth(\master, [\in, ~outputBus.index]);
 ~netDel = Synth(\netDelay, [
 	\in1, ~delayBus[0].index,
 	\in2, ~delayBus[1].index,
 	\in3, ~delayBus[2].index,
+	\in4, ~delayBus[3].index,
+	\in5, ~delayBus[4].index,
 	\out, ~outputBus.index
 ]);
 /*~netDel = [
@@ -141,6 +196,8 @@ s.doWhenBooted({
 ~perf_1 = Synth(\perf_1_pad, [\out, ~delayBus[0].index]);
 ~perf_2 = Synth(\perf_2_pad, [\out, ~delayBus[1].index]);
 ~perf_3 = Synth(\perf_3_pad, [\out, ~delayBus[2].index]);
+~perf_4 = Synth(\perf_4_pad, [\out, ~delayBus[3].index]);
+~perf_5 = Synth(\perf_5_pad, [\out, ~delayBus[4].index]);
 
 OSCFunc({ |msg, time, addr, recvPort|
 	var x = case
@@ -191,7 +248,8 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\xpos, -1, \ypos, -0.5, \out, ~outputBus.index]);
+		Synth(\trig_1, [\out, ~outputBus.index + 4]);
+		//Synth.head(s, \trig_1, [\out, ~delayBus[0].index]);
 	}
 	{msg[1] == \trig_2} {
 		("perf_1 -> trig_2 " + msg[2]).postln;
@@ -240,7 +298,8 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\xpos, -1, \ypos, -0.5, \out, ~outputBus.index]);
+		Synth(\trig_2, [\out, ~outputBus.index + 4]);
+		//Synth.head(s, \trig_2, [\out, ~delayBus[0].index]);
 	}
 	{msg[1] == \trig_3} {
 		("perf_1 -> trig_3 " + msg[2]).postln;
@@ -290,7 +349,8 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\xpos, -1, \ypos, -0.5, \out, ~outputBus.index]);
+		Synth(\trig_3, [\out, ~outputBus.index + 4]);
+		//Synth.head(s, \trig_3, [\out, ~delayBus[0].index]);
 	}
 	{msg[1] == \trig_4} {
 		("perf_1 -> trig_4 " + msg[2]).postln;
@@ -340,7 +400,8 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\xpos, -1, \ypos, -0.5, \out, ~outputBus.index]);
+		Synth(\trig_4, [\out, ~outputBus.index + 4]);
+		//Synth.head(s, \trig_4, [\out, ~delayBus[0].index]);
 	};
 
 	//x.postln;
@@ -349,7 +410,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 OSCFunc({ |msg, time, addr, recvPort|
 	var x = case
 	{msg[1] == \trig_1} {
-		("perf_2 -> trig_1 " + msg[2]);
+		("perf_2 -> trig_1 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
@@ -396,10 +457,11 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\xpos, 0, \ypos, 1, \out, ~outputBus.index]);
+		Synth(\trig_1, [\out, ~outputBus.index + 5]);
+		//Synth.head(s, \trig_1, [\out, ~delayBus[1].index]);
 	}
 	{msg[1] == \trig_2} {
-		("perf_2 -> trig_2 " + msg[2]);
+		("perf_2 -> trig_2 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
@@ -446,10 +508,11 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\xpos, 0, \ypos, 1, \out, ~outputBus.index]);
+		Synth(\trig_2, [\out, ~outputBus.index + 5]);
+		//Synth.head(s, \trig_2, [\out, ~delayBus[1].index]);
 	}
 	{msg[1] == \trig_3} {
-		("perf_2 -> trig_3 " + msg[2]);
+		("perf_2 -> trig_3 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
@@ -496,10 +559,11 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\xpos, 0, \ypos, 1, \out, ~outputBus.index]);
+		Synth(\trig_3, [\out, ~outputBus.index + 5]);
+		//Synth.head(s, \trig_3, [\out, ~delayBus[1].index]);
 	}
 	{msg[1] == \trig_4} {
-		("perf_2 -> trig_4 " + msg[2]);
+		("perf_2 -> trig_4 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
@@ -546,7 +610,8 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\xpos, 0, \ypos, 1, \out, ~outputBus.index]);
+		Synth(\trig_4, [\out, ~outputBus.index + 5]);
+		//Synth.head(s, \trig_4, [\out, ~delayBus[1].index]);
 	};
 
 	//x.postln;
@@ -555,7 +620,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 OSCFunc({ |msg, time, addr, recvPort|
 	var x = case
 	{msg[1] == \trig_1} {
-		("contr -> trig_1 " + msg[2]);
+		("contr -> trig_1 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
@@ -598,10 +663,11 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\xpos, 1, \ypos, -0.5, \out, ~outputBus.index]);
+		Synth(\trig_1, [\out, ~outputBus.index + 6]);
+		//Synth.head(s, \trig_1, [\out, ~delayBus[2].index]);
 	}
 	{msg[1] == \trig_2} {
-		("contr -> trig_2 " + msg[2]);
+		("contr -> trig_2 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
@@ -644,10 +710,11 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\xpos, 1, \ypos, -0.5, \out, ~outputBus.index]);
+		Synth(\trig_2, [\out, ~outputBus.index + 6]);
+		//Synth.head(s, \trig_2, [\out, ~delayBus[2].index]);
 	}
 	{msg[1] == \trig_3} {
-		("contr -> trig_3 " + msg[2]);
+		("contr -> trig_3 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
@@ -690,10 +757,11 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\xpos, 1, \ypos, -0.5, \out, ~outputBus.index]);
+		Synth(\trig_3, [\out, ~outputBus.index + 6]);
+		//Synth.head(s, \trig_3, [\out, ~delayBus[2].index]);
 	}
 	{msg[1] == \trig_4} {
-		("contr -> trig_4 " + msg[2]);
+		("contr -> trig_4 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
 			//"turning on".postln;
@@ -736,11 +804,411 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\xpos, 1, \ypos, -0.5, \out, ~outputBus.index]);
+		Synth(\trig_4, [\out, ~outputBus.index + 6]);
+		//Synth.head(s, \trig_4, [\out, ~delayBus[2].index]);
+	};
+
+	//x.postln;
+}, '/fieldcuts/perf_3');
+
+OSCFunc({ |msg, time, addr, recvPort|
+	var x = case
+	{msg[1] == \trig_1} {
+		("contr -> trig_1 " + msg[2]).postln;
+
+		if(msg[2] == 'on', {
+			//"turning on".postln;
+				if(perfData.active == false, {
+					"activating delay".postln;
+					perfData.active = true;
+					~netDel.set(\scale, 1);
+				});
+			if(perfData.perf4.trig1.state == false, {
+				perfData.perf4.trig1.state = true;
+				if(perfData.perf4.trig1.timestamp.notNil, {
+					if(perfData.perf4.trig1.offDur.size == 10, {
+						perfData.perf4.trig1.offDur.pop;
+					});
+					perfData.perf4.trig1.offDur.addFirst(
+						time - perfData.perf4.trig1.timestamp
+					)
+				});
+				perfData.perf4.trig1.timestamp = time;
+
+				~perf_4.set(\gate, 1);
+			});
+		});
+
+		if(msg[2] == 'off', {
+			//"turning off".postln;
+			if(perfData.perf4.trig1.state == true, {
+				perfData.perf4.trig1.state = false;
+				if(perfData.perf4.trig1.timestamp.notNil, {
+					if(perfData.perf4.trig1.onDur.size == 10, {
+						perfData.perf4.trig1.onDur.pop;
+					});
+					perfData.perf4.trig1.onDur.addFirst(
+						time - perfData.perf4.trig1.timestamp
+					)
+				});
+				perfData.perf4.trig1.timestamp = time;
+
+				~perf_4.set(\gate, 0);
+			});
+		});
+
+		Synth(\trig_1, [\out, ~outputBus.index + 7]);
+		//Synth.head(s, \trig_1, [\out, ~delayBus[3].index]);
+	}
+	{msg[1] == \trig_2} {
+		("contr -> trig_2 " + msg[2]).postln;
+
+		if(msg[2] == 'on', {
+			//"turning on".postln;
+				if(perfData.active == false, {
+					"activating delay".postln;
+					perfData.active = true;
+					~netDel.set(\scale, 1);
+				});
+			if(perfData.perf4.trig2.state == false, {
+				perfData.perf4.trig2.state = true;
+				if(perfData.perf4.trig2.timestamp.notNil, {
+					if(perfData.perf4.trig2.offDur.size == 10, {
+						perfData.perf4.trig2.offDur.pop;
+					});
+					perfData.perf4.trig2.offDur.addFirst(
+						time - perfData.perf4.trig2.timestamp
+					)
+				});
+				perfData.perf4.trig2.timestamp = time;
+
+				~perf_4.set(\gate, 1);
+			});
+		});
+
+		if(msg[2] == 'off', {
+			//"turning off".postln;
+			if(perfData.perf4.trig2.state == true, {
+				perfData.perf4.trig2.state = false;
+				if(perfData.perf4.trig2.timestamp.notNil, {
+					if(perfData.perf4.trig2.onDur.size == 10, {
+						perfData.perf4.trig2.onDur.pop;
+					});
+					perfData.perf4.trig2.onDur.addFirst(
+						time - perfData.perf4.trig2.timestamp
+					)
+				});
+				perfData.perf4.trig2.timestamp = time;
+
+				~perf_4.set(\gate, 0);
+			});
+		});
+
+		Synth(\trig_2, [\out, ~outputBus.index + 7]);
+		//Synth.head(s, \trig_2, [\out, ~delayBus[3].index]);
+	}
+	{msg[1] == \trig_3} {
+		("contr -> trig_3 " + msg[2]).postln;
+
+		if(msg[2] == 'on', {
+			//"turning on".postln;
+				if(perfData.active == false, {
+					"activating delay".postln;
+					perfData.active = true;
+					~netDel.set(\scale, 1);
+				});
+			if(perfData.perf4.trig3.state == false, {
+				perfData.perf4.trig3.state = true;
+				if(perfData.perf4.trig3.timestamp.notNil, {
+					if(perfData.perf4.trig3.offDur.size == 10, {
+						perfData.perf4.trig3.offDur.pop;
+					});
+					perfData.perf4.trig3.offDur.addFirst(
+						time - perfData.perf4.trig3.timestamp
+					)
+				});
+				perfData.perf4.trig3.timestamp = time;
+
+				~perf_4.set(\gate, 1);
+			});
+		});
+
+		if(msg[2] == 'off', {
+			//"turning off".postln;
+			if(perfData.perf4.trig3.state == true, {
+				perfData.perf4.trig3.state = false;
+				if(perfData.perf4.trig3.timestamp.notNil, {
+					if(perfData.perf4.trig3.onDur.size == 10, {
+						perfData.perf4.trig3.onDur.pop;
+					});
+					perfData.perf4.trig3.onDur.addFirst(
+						time - perfData.perf4.trig3.timestamp
+					)
+				});
+				perfData.perf4.trig3.timestamp = time;
+
+				~perf_4.set(\gate, 0);
+			});
+		});
+
+		Synth(\trig_3, [\out, ~outputBus.index + 7]);
+		//Synth.head(s, \trig_3, [\out, ~delayBus[3].index]);
+	}
+	{msg[1] == \trig_4} {
+		("contr -> trig_4 " + msg[2]).postln;
+
+		if(msg[2] == 'on', {
+			//"turning on".postln;
+				if(perfData.active == false, {
+					"activating delay".postln;
+					perfData.active = true;
+					~netDel.set(\scale, 1);
+				});
+			if(perfData.perf4.trig4.state == false, {
+				perfData.perf4.trig4.state = true;
+				if(perfData.perf4.trig4.timestamp.notNil, {
+					if(perfData.perf4.trig4.offDur.size == 10, {
+						perfData.perf4.trig4.offDur.pop;
+					});
+					perfData.perf4.trig4.offDur.addFirst(
+						time - perfData.perf4.trig4.timestamp
+					)
+				});
+				perfData.perf4.trig4.timestamp = time;
+
+				~perf_4.set(\gate, 1);
+			});
+		});
+
+		if(msg[2] == 'off', {
+			//"turning off".postln;
+			if(perfData.perf4.trig4.state == true, {
+					perfData.perf4.trig4.state = false;
+				if(perfData.perf4.trig4.timestamp.notNil, {
+					if(perfData.perf4.trig4.onDur.size == 10, {
+						perfData.perf4.trig4.onDur.pop;
+					});
+					perfData.perf4.trig4.onDur.addFirst(
+						time - perfData.perf4.trig4.timestamp
+					)
+				});
+				perfData.perf4.trig4.timestamp = time;
+
+				~perf_4.set(\gate, 0);
+			});
+		});
+
+		Synth(\trig_4, [\out, ~outputBus.index + 7]);
+		//Synth.head(s, \trig_4, [\out, ~delayBus[3].index]);
+	};
+
+	//x.postln;
+}, '/fieldcuts/perf_4');
+
+OSCFunc({ |msg, time, addr, recvPort|
+	var x = case
+	{msg[1] == \trig_1} {
+		("contr -> trig_1 " + msg[2]).postln;
+
+		if(msg[2] == 'on', {
+			//"turning on".postln;
+				if(perfData.active == false, {
+					"activating delay".postln;
+					perfData.active = true;
+					~netDel.set(\scale, 1);
+				});
+			if(perfData.perf5.trig1.state == false, {
+				perfData.perf5.trig1.state = true;
+				if(perfData.perf5.trig1.timestamp.notNil, {
+					if(perfData.perf5.trig1.offDur.size == 10, {
+						perfData.perf5.trig1.offDur.pop;
+					});
+					perfData.perf5.trig1.offDur.addFirst(
+						time - perfData.perf5.trig1.timestamp
+					)
+				});
+				perfData.perf5.trig1.timestamp = time;
+
+				~perf_5.set(\gate, 1);
+			});
+		});
+
+		if(msg[2] == 'off', {
+			//"turning off".postln;
+			if(perfData.perf5.trig1.state == true, {
+				perfData.perf5.trig1.state = false;
+				if(perfData.perf5.trig1.timestamp.notNil, {
+					if(perfData.perf5.trig1.onDur.size == 10, {
+						perfData.perf5.trig1.onDur.pop;
+					});
+					perfData.perf5.trig1.onDur.addFirst(
+						time - perfData.perf5.trig1.timestamp
+					)
+				});
+				perfData.perf5.trig1.timestamp = time;
+
+				~perf_5.set(\gate, 0);
+			});
+		});
+
+		Synth(\trig_1, [\out, ~outputBus.index + 8]);
+		//Synth.head(s, \trig_1, [\out, ~delayBus[4].index]);
+	}
+	{msg[1] == \trig_2} {
+		("contr -> trig_2 " + msg[2]).postln;
+
+		if(msg[2] == 'on', {
+			//"turning on".postln;
+				if(perfData.active == false, {
+					"activating delay".postln;
+					perfData.active = true;
+					~netDel.set(\scale, 1);
+				});
+			if(perfData.perf5.trig2.state == false, {
+				perfData.perf5.trig2.state = true;
+				if(perfData.perf5.trig2.timestamp.notNil, {
+					if(perfData.perf5.trig2.offDur.size == 10, {
+						perfData.perf5.trig2.offDur.pop;
+					});
+					perfData.perf5.trig2.offDur.addFirst(
+						time - perfData.perf5.trig2.timestamp
+					)
+				});
+				perfData.perf5.trig2.timestamp = time;
+
+				~perf_5.set(\gate, 1);
+			});
+		});
+
+		if(msg[2] == 'off', {
+			//"turning off".postln;
+			if(perfData.perf5.trig2.state == true, {
+				perfData.perf5.trig2.state = false;
+				if(perfData.perf5.trig2.timestamp.notNil, {
+					if(perfData.perf5.trig2.onDur.size == 10, {
+						perfData.perf5.trig2.onDur.pop;
+					});
+					perfData.perf5.trig2.onDur.addFirst(
+						time - perfData.perf5.trig2.timestamp
+					)
+				});
+				perfData.perf5.trig2.timestamp = time;
+
+				~perf_5.set(\gate, 0);
+			});
+		});
+
+		Synth(\trig_2, [\out, ~outputBus.index + 8]);
+		//Synth.head(s, \trig_2, [\out, ~delayBus[4].index]);
+	}
+	{msg[1] == \trig_3} {
+		("contr -> trig_3 " + msg[2]).postln;
+
+		if(msg[2] == 'on', {
+			//"turning on".postln;
+				if(perfData.active == false, {
+					"activating delay".postln;
+					perfData.active = true;
+					~netDel.set(\scale, 1);
+				});
+			if(perfData.perf5.trig3.state == false, {
+				perfData.perf5.trig3.state = true;
+				if(perfData.perf5.trig3.timestamp.notNil, {
+					if(perfData.perf5.trig3.offDur.size == 10, {
+						perfData.perf5.trig3.offDur.pop;
+					});
+					perfData.perf5.trig3.offDur.addFirst(
+						time - perfData.perf5.trig3.timestamp
+					)
+				});
+				perfData.perf5.trig3.timestamp = time;
+
+				~perf_5.set(\gate, 1);
+			});
+		});
+
+		if(msg[2] == 'off', {
+			//"turning off".postln;
+			if(perfData.perf5.trig3.state == true, {
+				perfData.perf5.trig3.state = false;
+				if(perfData.perf5.trig3.timestamp.notNil, {
+					if(perfData.perf5.trig3.onDur.size == 10, {
+						perfData.perf5.trig3.onDur.pop;
+					});
+					perfData.perf5.trig3.onDur.addFirst(
+						time - perfData.perf5.trig3.timestamp
+					)
+				});
+				perfData.perf5.trig3.timestamp = time;
+
+				~perf_5.set(\gate, 0);
+			});
+		});
+
+		Synth(\trig_3, [\out, ~outputBus.index + 8]);
+		//Synth.head(s, \trig_3, [\out, ~delayBus[4].index]);
+	}
+	{msg[1] == \trig_4} {
+		("contr -> trig_4 " + msg[2]).postln;
+
+		if(msg[2] == 'on', {
+			//"turning on".postln;
+				if(perfData.active == false, {
+					"activating delay".postln;
+					perfData.active = true;
+					~netDel.set(\scale, 1);
+				});
+			if(perfData.perf5.trig4.state == false, {
+				perfData.perf5.trig4.state = true;
+				if(perfData.perf5.trig4.timestamp.notNil, {
+					if(perfData.perf5.trig4.offDur.size == 10, {
+						perfData.perf5.trig4.offDur.pop;
+					});
+					perfData.perf5.trig4.offDur.addFirst(
+						time - perfData.perf5.trig4.timestamp
+					)
+				});
+				perfData.perf5.trig4.timestamp = time;
+
+				~perf_5.set(\gate, 1);
+			});
+		});
+
+		if(msg[2] == 'off', {
+			//"turning off".postln;
+			if(perfData.perf5.trig4.state == true, {
+					perfData.perf5.trig4.state = false;
+				if(perfData.perf5.trig4.timestamp.notNil, {
+					if(perfData.perf5.trig4.onDur.size == 10, {
+						perfData.perf5.trig4.onDur.pop;
+					});
+					perfData.perf5.trig4.onDur.addFirst(
+						time - perfData.perf5.trig4.timestamp
+					)
+				});
+				perfData.perf5.trig4.timestamp = time;
+
+				~perf_5.set(\gate, 0);
+			});
+		});
+
+		Synth(\trig_4, [\out, ~outputBus.index + 8]);
+		//Synth.head(s, \trig_4, [\out, ~delayBus[4].index]);
 	};
 
 	//x.postln;
 }, '/fieldcuts/contr');
+
+OSCFunc({ |msg, time, addr, recvPort|
+		if(msg[1] == 'on',
+			{
+				"new connection".postln;
+				Synth(\connect_on, [\out, ~delayBus[4].index]);
+			}, {
+				"terminating connection".postln;
+				Synth(\connect_off, [\out, ~delayBus[4].index]);
+		});
+}, '/fieldcuts/connect');
 
 OSCFunc({
 	~master.set(\gate, 0);

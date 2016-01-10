@@ -22,3 +22,10 @@ s.scope;
 1.9.asInteger%2
 
 p.pop
+
+Server.local.options.numOutputBusChannels
+Server.local.options.outputStreamsEnabled_(nil);
+Server.local.options.outputStreamsEnabled
+Server.local.options.numOutputBusChannels;
+Server.local.options.numOutputBusChannels_(9);
+s.boot;
