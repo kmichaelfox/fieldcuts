@@ -164,16 +164,16 @@ SynthDef(\perf_3_pad, {|pan = 0, gate = 0, out = 0|
 SynthDef(\perf_4_pad, {|pan = 0, gate = 0, out = 0|
 	var freq, osc, env, sig;
 
-	freq = TChoose.kr(Changed.kr(gate),[0, 2, 3, 5]) + (12 * 3);
+	freq = TChoose.kr(Latch.kr(gate, Changed.kr(gate)),[0, 3, 7, 8]) + (12 * 7);
 
 	//osc = Mix.ar(SinOsc.ar(410 * [0.5, 0.98, 1, 1.01,  2, 4], mul: 0.05));
-	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, 0, 0.8), freq.midicps)).clip(-1, 1);
+	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, 0, 0.8), (freq.midicps / 2))).clip(-1, 1);
 
-	env = EnvGen.kr(Env.adsr(3, curve:8), gate, doneAction: 0);
+	env = EnvGen.kr(Env.adsr(3, curve:8), gate, doneAction: 0) * LPF.kr(Saw.kr(1.3, 0.5, 0.5), 1.3 / 2);
 
 	sig = osc * env;
 
-	Out.ar(out, sig);//Pan2.ar(sig, pan));
+	Out.ar(out, sig);
 }).add;
 
 SynthDef(\perf_5_pad, {|pan = 0, gate = 0, out = 0|
