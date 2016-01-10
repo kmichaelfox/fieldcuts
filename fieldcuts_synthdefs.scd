@@ -152,7 +152,7 @@ SynthDef(\perf_3_pad, {|pan = 0, gate = 0, out = 0|
 	freq = TChoose.kr(Changed.kr(gate),[0, 2, 3, 5]) + (12 * 3);
 
 	//osc = Mix.ar(SinOsc.ar(410 * [0.5, 0.98, 1, 1.01,  2, 4], mul: 0.05));
-	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, 0, 0.8), freq.midicps)).clip(-1, 1);
+	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, 0, 0.6), freq.midicps)).clip(-1, 1);
 
 	env = EnvGen.kr(Env.adsr(3, curve:8), gate, doneAction: 0);
 
@@ -175,7 +175,7 @@ SynthDef(\perf_4_pad, {|pan = 0, gate = 0, out = 0|
 	modulator = SinOsc.ar(mod_freq, mod_modulator, mod_amp);
 	carrier = SinOsc.ar(car_freq, modulator, car_amp, 1.5);
 
-	freq = TChoose.kr(Latch.kr(gate, Changed.kr(gate)),[0, 1, 2, 7, 8]) + (12 * 6);
+	freq = TChoose.kr(Latch.kr(gate, Changed.kr(gate)),[0, 1, 2, 7, 8]) + (12 * 7);
 
 	//osc = Mix.ar(SinOsc.ar(410 * [0.5, 0.98, 1, 1.01,  2, 4], mul: 0.05));
 	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps), freq * 2 * carrier)).clip(-1, 1);
@@ -195,7 +195,7 @@ SynthDef(\perf_5_pad, {|pan = 0, gate = 0, out = 0|
 	//osc = Mix.ar(SinOsc.ar(410 * [0.5, 0.98, 1, 1.01,  2, 4], mul: 0.05));
 	//osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, 0, 0.8), freq.midicps)).clip(-1, 1);
 
-	osc = (NTube.ar(PinkNoise.ar*SinOsc.ar(0.25),`[0.97,1.0,1.0,1.0,1.0,0.97],`[0.5,   0.9   ,0.2,-0.4],`([0.01,0.02,0.01,0.005,0.05]*freq))*0.1).dup;
+	osc = (NTube.ar(PinkNoise.ar*SinOsc.ar(0.25, mul:0.25, add: 0.75),`[0.97,1.0,1.0,1.0,1.0,0.97],`[0.5,   0.9   ,0.2,-0.4],`([0.01,0.02,0.01,0.005,0.05]*freq))*0.1).dup;
 
 	env = EnvGen.kr(Env.adsr(3, curve:8), gate, doneAction: 0);
 

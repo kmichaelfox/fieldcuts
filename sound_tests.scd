@@ -8,9 +8,9 @@ gui.buttonHeight = 25;
 gui.buttonWidth = 50;
 
 ~p1 = Synth(\perf_1_pad, [\out, 0]);
-~p2 = Synth(\perf_2_pad, [\out, 0]);
-~p3 = Synth(\perf_3_pad, [\out, 0]);
-~p4 = Synth(\perf_4_pad, [\out, 0]);
+~p2 = Synth(\perf_2_pad, [\out, 1]);
+~p3 = Synth(\perf_3_pad, [\out, 2]);
+~p4 = Synth(\perf_4_pad, [\out, 3]);
 ~p5 = Synth(\perf_5_pad, [\out, 0]);
 
 (thisProcess.nowExecutingPath.dirname +/+ "fieldcuts_synthdefs.scd").loadPaths;
