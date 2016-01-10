@@ -34,10 +34,10 @@ s.boot;
 var f = {
 	var mod_modulator, modulator, carrier, mod_mod_freq, car_freq, mod_freq, mod_mod_amp, car_amp, mod_amp;
 
-	mod_mod_freq = 440;
-	car_freq = 220;
-	mod_freq = 700;
-	mod_mod_amp = 20;
+	mod_mod_freq = 45;
+	car_freq = 3;
+	mod_freq = 4;
+	mod_mod_amp = 3;
 	car_amp = 0.5;
 	mod_amp = 30;
 
@@ -48,3 +48,5 @@ var f = {
 f.plot
 )
 ~p4.plot
+
+s.scope

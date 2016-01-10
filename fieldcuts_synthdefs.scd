@@ -164,10 +164,10 @@ SynthDef(\perf_3_pad, {|pan = 0, gate = 0, out = 0|
 SynthDef(\perf_4_pad, {|pan = 0, gate = 0, out = 0|
 	var freq, osc, env, sig, mod_mod_freq, mod_freq, car_freq, mod_mod_amp, mod_amp, car_amp, mod_modulator, modulator, carrier;
 
-	mod_mod_freq = 440;
-	car_freq = 220;
-	mod_freq = 700;
-	mod_mod_amp = 20;
+	mod_mod_freq = 45;
+	car_freq = 3;
+	mod_freq = 4;
+	mod_mod_amp = 3;
 	car_amp = 0.5;
 	mod_amp = 30;
 
@@ -175,12 +175,12 @@ SynthDef(\perf_4_pad, {|pan = 0, gate = 0, out = 0|
 	modulator = SinOsc.ar(mod_freq, mod_modulator, mod_amp);
 	carrier = SinOsc.ar(car_freq, modulator, car_amp, 1.5);
 
-	freq = TChoose.kr(Latch.kr(gate, Changed.kr(gate)),[0, 1, 2, 7, 8]) + (12 * 7);
+	freq = TChoose.kr(Latch.kr(gate, Changed.kr(gate)),[0, 1, 2, 7, 8]) + (12 * 6);
 
 	//osc = Mix.ar(SinOsc.ar(410 * [0.5, 0.98, 1, 1.01,  2, 4], mul: 0.05));
-	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, mul:5), (freq / 2) * carrier)).clip(-1, 1);
+	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps), freq * 2 * carrier)).clip(-1, 1);
 
-	env = EnvGen.kr(Env.adsr(3, curve:8), gate, doneAction: 0) * LPF.kr(Saw.kr(1.3, 0.5, 0.5), 1.3 / 2);
+	env = EnvGen.kr(Env.adsr(3, curve:8), gate, doneAction: 0);
 
 	sig = osc * env;
 
