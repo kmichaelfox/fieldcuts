@@ -164,7 +164,7 @@ SynthDef(\perf_3_pad, {|pan = 0, gate = 0, out = 0|
 SynthDef(\perf_4_pad, {|pan = 0, gate = 0, out = 0|
 	var freq, osc, env, sig;
 
-	freq = TChoose.kr(Latch.kr(gate, Changed.kr(gate)),[0, 3, 7, 8]) + (12 * 7);
+	freq = TChoose.kr(Latch.kr(gate, Changed.kr(gate)),[0, 1, 2, 7, 8]) + (12 * 7);
 
 	//osc = Mix.ar(SinOsc.ar(410 * [0.5, 0.98, 1, 1.01,  2, 4], mul: 0.05));
 	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, 0, 0.8), (freq.midicps / 2))).clip(-1, 1);
