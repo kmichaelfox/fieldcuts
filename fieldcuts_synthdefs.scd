@@ -197,7 +197,7 @@ SynthDef(\perf_5_pad, {|pan = 0, gate = 0, out = 0|
 
 	osc = (NTube.ar(PinkNoise.ar*SinOsc.ar(0.25, mul:0.25, add: 0.75),`[0.97,1.0,1.0,1.0,1.0,0.97],`[0.5,   0.9   ,0.2,-0.4],`([0.01,0.02,0.01,0.005,0.05]*freq))*0.1).dup;
 
-	env = EnvGen.kr(Env.adsr(3, curve:8), gate, doneAction: 0);
+	env = EnvGen.kr(Env.adsr(3, 1, curve:8), gate, doneAction: 0);
 
 	sig = osc * env;
 
