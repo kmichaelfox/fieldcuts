@@ -195,9 +195,9 @@ s.doWhenBooted({
 
 ~perf_1 = Synth(\perf_1_pad, [\out, ~delayBus[0].index]);
 ~perf_2 = Synth(\perf_2_pad, [\out, ~delayBus[1].index]);
-~perf_3 = Synth(\perf_3_pad, [\out, ~delayBus[2].index]);
+~perf_3 = Synth(\perf_5_pad, [\out, ~delayBus[2].index]);
 ~perf_4 = Synth(\perf_4_pad, [\out, ~delayBus[3].index]);
-~perf_5 = Synth(\perf_5_pad, [\out, ~delayBus[4].index]);
+~perf_5 = Synth(\perf_3_pad, [\out, ~delayBus[4].index]);
 
 OSCFunc({ |msg, time, addr, recvPort|
 	var x = case

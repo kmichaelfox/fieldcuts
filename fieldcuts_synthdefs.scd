@@ -45,7 +45,7 @@ SynthDef(\netDelay, { |in1, in2, in3, in4, in5, scale = 0, out = 0|
 SynthDef(\trig_1, { |out = 0|
 	var osc, env, sig;
 
-	osc = BPF.ar(WhiteNoise.ar(0.5), 10000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3));
+	osc = BPF.ar(WhiteNoise.ar(0.5), 10000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps));
 
 	env = EnvGen.ar(Env.perc(releaseTime: 0.3), doneAction: 2);
 
@@ -57,7 +57,7 @@ SynthDef(\trig_1, { |out = 0|
 SynthDef(\trig_2, { |out = 0|
 	var osc, env, sig;
 
-	osc = BPF.ar(WhiteNoise.ar(0.5), 20000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3));
+	osc = BPF.ar(WhiteNoise.ar(0.5), 20000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps));
 
 	env = EnvGen.ar(Env.perc(releaseTime: 0.3), doneAction: 2);
 
@@ -69,7 +69,7 @@ SynthDef(\trig_2, { |out = 0|
 SynthDef(\trig_3, { |out = 0|
 	var osc, env, sig;
 
-	osc = BPF.ar(WhiteNoise.ar(0.5), 8000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3));
+	osc = BPF.ar(WhiteNoise.ar(0.5), 8000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps));
 
 	env = EnvGen.ar(Env.perc(releaseTime: 0.3), doneAction: 2);
 
@@ -81,7 +81,7 @@ SynthDef(\trig_3, { |out = 0|
 SynthDef(\trig_4, { |out = 0|
 	var osc, env, sig;
 
-	osc = BPF.ar(WhiteNoise.ar(0.5), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3));
+	osc = BPF.ar(WhiteNoise.ar(0.5), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps, mul:0.4));
 
 	env = EnvGen.ar(Env.perc(releaseTime: 0.3), doneAction: 2);
 
@@ -207,13 +207,16 @@ SynthDef(\perf_5_pad, {|pan = 0, gate = 0, out = 0|
 SynthDef(\connect_on, { |out = 0|
 	var freq, osc, env, sig;
 
-	freq = 2 + (12 * 6);
+	freq = (2 + (12 * 6)).midicps / [16, 1];
+	//freq = 2 + (12 * 6);
 
-	osc = SinOsc.ar(SinOsc.ar(freq.midicps, mul:15) + freq.midicps, 0, 0.15);
+	osc = SinOsc.ar(SinOsc.ar(freq, mul:15) + freq, 0, 0.15);
 
-	env = EnvGen.ar(Env.perc(0.2, 0.2), doneAction:2);
+	env = EnvGen.ar(Env.perc([0.01, 0.2], [0.05, 0.3]), doneAction:2);
+	//env = EnvGen.ar(Env.perc(0.2, 0.2), doneAction:2);
 
-	sig = osc * env;
+	sig = Mix.ar(osc * env);
+	//sig = osx * env;
 
 	Out.ar(out, sig);
 }).add;
@@ -221,13 +224,16 @@ SynthDef(\connect_on, { |out = 0|
 SynthDef(\connect_off, { |out = 0|
 	var freq, osc, env, sig;
 
-	freq = 7 + (12 * 5);
+	freq = (9 + (12 * 5)).midicps / [16, 1];
+	//freq = 7 + (12 * 5);
 
-	osc = SinOsc.ar(SinOsc.ar(freq.midicps, mul:15) + freq.midicps, 0, 0.15);
+	osc = SinOsc.ar(SinOsc.ar(freq, mul:15) + freq, 0, 0.15);
 
-	env = EnvGen.ar(Env.perc(0.2, 0.2), doneAction:2);
+	env = EnvGen.ar(Env.perc([0.01, 0.2], [0.05, 0.3]), doneAction:2);
+	//env = EnvGen.ar(Env.perc(0.2, 0.2), doneAction:2);
 
-	sig = osc * env;
+	sig = Mix.ar(osc * env);
+	//sig = osc * env;
 
 	Out.ar(out, sig);
 }).add;
