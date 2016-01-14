@@ -12,23 +12,23 @@ SynthDef(\master, { |in, out = 0, gate = 1|
 SynthDef(\netDelay, { |in1, in2, in3, in4, in5, scale = 0, out = 0|
 	var feedback, sig1, sig2, sig3, sig4, sig5, delay;
 
-	feedback = LPF.ar(EnvGen.ar(Env.adsr(attackTime: (1 * 60), curve: 0), scale) * LocalIn.ar(5), 400);
+	feedback = LPF.ar(EnvGen.ar(Env.adsr(attackTime: (0.01 * 60), curve: 0), scale) * LocalIn.ar(5), 400);
 	//feedback = LPF.ar(LocalIn.ar(5), 400);
 
-	sig1 = In.ar(in1) + (feedback[0] * 0.8);
-	sig2 = In.ar(in2) + (feedback[1] * 0.8);
-	sig3 = In.ar(in3) + (feedback[2] * 0.8);
-	sig4 = In.ar(in4) + (feedback[3] * 0.8);
-	sig5 = In.ar(in5) + (feedback[4] * 0.8);
+	sig1 = In.ar(in1) + (feedback[0] * 0.9);
+	sig2 = In.ar(in2) + (feedback[1] * 0.9);
+	sig3 = In.ar(in3) + (feedback[2] * 0.9);
+	sig4 = In.ar(in4) + (feedback[3] * 0.9);
+	sig5 = In.ar(in5) + (feedback[4] * 0.9);
 
 	delay = DelayN.ar([sig1, sig2, sig3, sig4, sig5], 1.5, [Rand(0.5, 1.5), Rand(0.5, 1.5), Rand(0.5, 1.5), Rand(0.5, 1.5), Rand(0.5, 1.5)]);
 
 	LocalOut.ar([
-		TWChoose.ar( Dust.ar(0.9), delay, [0.1, 0.225, 0.225, 0.225, 0.225] ),
-		TWChoose.ar( Dust.ar(1.1), delay, [0.225, 0.1, 0.225, 0.225, 0.225] ),
-		TWChoose.ar( Dust.ar(1.3), delay, [0.225, 0.225, 0.1, 0.225, 0.255] ),
-		TWChoose.ar( Dust.ar(1.0), delay, [0.225, 0.225, 0.225, 0.1, 0.225] ),
-		TWChoose.ar( Dust.ar(1.2), delay, [0.225, 0.225, 0.225, 0.225, 0.1] )
+		TWChoose.ar( Dust.ar(0.9), delay, [0.05, 0.2375, 0.2375, 0.2375, 0.2375] ),
+		TWChoose.ar( Dust.ar(1.1), delay, [0.2375, 0.05, 0.2375, 0.2375, 0.2375] ),
+		TWChoose.ar( Dust.ar(1.3), delay, [0.2375, 0.2375, 0.05, 0.2375, 0.2375] ),
+		TWChoose.ar( Dust.ar(1.0), delay, [0.2375, 0.2375, 0.2375, 0.05, 0.2375] ),
+		TWChoose.ar( Dust.ar(1.2), delay, [0.2375, 0.2375, 0.2375, 0.2375, 0.05] )
 	]);
 
 		Out.ar(out,
@@ -182,7 +182,7 @@ SynthDef(\perf_4_pad, {|pan = 0, gate = 0, out = 0|
 
 	env = EnvGen.kr(Env.adsr(3, curve:8), gate, doneAction: 0);
 
-	sig = osc * env;
+	sig = (osc * env) * 1.1;
 
 	Out.ar(out, sig);
 }).add;
@@ -236,6 +236,20 @@ SynthDef(\connect_off, { |out = 0|
 	//sig = osc * env;
 
 	Out.ar(out, sig);
+}).add;
+
+SynthDef(\lights, { |out = 0, dur = 5|
+	var freq, osc, env, sig;
+
+	freq = IRand(0,3) + (12 * 3);
+
+	osc = LPF.ar(LFTri.ar(freq.midicps, mul:0.1), freq.midicps);
+
+	env = EnvGen.kr(Env([0, 1, 1, 0], [dur / 5 * 2, dur / 5, dur / 5 * 2]), doneAction:2);
+
+	sig = env * osc;
+
+	Out.ar(out, Pan4.ar(sig, Dust2.kr(2), Dust2.kr(2)));
 }).add;
 )
 

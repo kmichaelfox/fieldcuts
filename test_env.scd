@@ -1207,8 +1207,14 @@ OSCFunc({ |msg, time, addr, recvPort|
 			}, {
 				"terminating connection".postln;
 				Synth(\connect_off, [\out, ~delayBus[4].index]);
-		});
+			}
+		);
 }, '/fieldcuts/connect');
+
+OSCFunc({ |msg, time, addr, recvPort|
+	"cue lights".postln;
+	Synth(\lights, [\out, 0, \dur, msg[1]]);
+}, '/fieldcuts/lights');
 
 OSCFunc({
 	~master.set(\gate, 0);
