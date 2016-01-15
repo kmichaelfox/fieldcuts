@@ -90,6 +90,42 @@ SynthDef(\trig_4, { |out = 0|
 	Out.ar(out, sig);
 }).add;
 
+SynthDef(\trig_b, { |out = 0|
+	var freq, osc, env, sig;
+
+	freq = [0, 1, 3, 9];
+
+	freq = Select.kr(freq, IRand(0, freq.size - 1)) + (12 * 10);
+
+	//osc = BPF.ar(WhiteNoise.ar(0.5), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps, mul:0.4));
+
+	osc = [Mix.ar(SinOsc.ar([freq - 12, freq, freq + 3, freq + 5].midicps, mul:0.01)) + (BrownNoise.ar(0.01) * PinkNoise.ar(0.01)), BPF.ar(WhiteNoise.ar(0.5), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps, mul:0.4))];
+
+	env = EnvGen.ar(Env.perc(releaseTime: [0.6, 0.3]), doneAction: 2);
+
+	sig = MulAdd(osc * env, SinOsc.kr(30 + SinOsc.kr(0.2, mul: 3), mul:0.5, add:0.5));
+
+	Out.ar(out, sig);
+}).add;
+
+SynthDef(\trig_n, { |out = 0|
+	var osc, env, sig;
+
+	//freq = [0, 1, 3, 9];
+
+	//freq = Select.kr(freq, IRand(0, freq.size - 1)) + (12 * 10);
+
+	//osc = BPF.ar(WhiteNoise.ar(0.5), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps, mul:0.4));
+
+	osc = [SinOsc.ar(20000 + Rand(-3, 3), mul:0.1) + PinkNoise.ar(Dust.ar(4, 0.1)), BPF.ar(WhiteNoise.ar(0.5), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps, mul:0.4))];
+
+	env = EnvGen.ar(Env.perc(releaseTime: [1, 0.3]), doneAction: 2);
+
+	sig = Mix.ar(osc * env);
+
+	Out.ar(out, sig);
+}).add;
+
 SynthDef(\perf_1_pad, {|pan = 0, gate = 0, out = 0|
 	var osc, env, sig;
 

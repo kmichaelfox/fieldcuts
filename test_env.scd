@@ -248,10 +248,10 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\out, ~outputBus.index + 4]);
+		Synth(\trig_n, [\out, ~outputBus.index + 4]);
 		//Synth.head(s, \trig_1, [\out, ~delayBus[0].index]);
 	}
-	{msg[1] == \trig_2} {
+	{msg[1] == \trig_1} {
 		("perf_1 -> trig_2 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {

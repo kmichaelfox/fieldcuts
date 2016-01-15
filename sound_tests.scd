@@ -137,4 +137,16 @@ gui.connect_off = Button(gui.w, Rect(gui.margin + ((gui.buttonWidth + gui.margin
 	"setting connect off".postln;
 	Synth(\connect_off, [\out, 0]);
 });
+
+//
+// Trigger
+//
+gui.trigger = Button(gui.w, Rect(gui.margin + ((gui.buttonWidth + gui.margin) * 2), (gui.margin * 2 + gui.buttonHeight), 75, 25))
+.states_([
+	["Trigger", Color.black, Color.gray(0.8)]
+])
+.action_({
+	"trigger".postln;
+	Synth(\trig_b, [\out, 0]);
+});
 )
