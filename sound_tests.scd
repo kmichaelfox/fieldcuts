@@ -150,3 +150,7 @@ gui.trigger = Button(gui.w, Rect(gui.margin + ((gui.buttonWidth + gui.margin) * 
 	Synth(\trig_b, [\out, 5]);
 });
 )
+
+n = NetAddr.new("127.0.0.1", 57120);
+~netDel.set(\scale, 1);
+n.sendMsg("/fieldcuts/delayTextures");

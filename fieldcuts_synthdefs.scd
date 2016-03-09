@@ -104,7 +104,7 @@ SynthDef(\trig_b, { |out = 0|
 
 	freq = Select.kr(freq, IRand(0, freq.size - 1)) + (12 * 10);
 
-	osc = EnvGen.ar(Env.perc(0.2, 0.1))*BPF.ar(WhiteNoise.ar(0.3), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * Mix.ar(SinOsc.ar(([2, 10] + (12 * 3)).midicps * Rand(0.9, 1.1), mul:0.4)));
+	osc = EnvGen.ar(Env.perc(0.2, 0.1))*BPF.ar(WhiteNoise.ar(0.3), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.5)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * Mix.ar(SinOsc.ar(([2, 10] + (12 * 3)).midicps * Rand(0.9, 1.1), mul:0.6)));
 
 	//osc = [Mix.ar(SinOsc.ar([freq - 12, freq, freq + 3, freq + 5].midicps, mul:0.01)) + (BrownNoise.ar(0.01) * PinkNoise.ar(0.01)), BPF.ar(WhiteNoise.ar(0.5), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps, mul:0.4))];
 

@@ -198,11 +198,42 @@ s.doWhenBooted({
 ~perf_3 = Synth(\perf_5_pad, [\out, ~delayBus[2].index]);
 ~perf_4 = Synth(\perf_4_pad, [\out, ~delayBus[3].index]);
 ~perf_5 = Synth(\perf_3_pad, [\out, ~delayBus[4].index]);*/
-	~perf_1 = Synth(\perf_3_pad, [\out, ~delayBus[0].index]);
-	~perf_2 = Synth(\perf_4_pad, [\out, ~delayBus[1].index]);
-	~perf_3 = Synth(\perf_5_pad, [\out, ~delayBus[2].index]);
-	~perf_4 = Syntn(\perf_1_pad, [\out, ~delayBus[3].index]);
-	~perf_5 = Synth(\perf_2_pad, [\out, ~delayBus[4].index]);
+~perf_1 = Synth(\perf_3_pad, [\out, ~delayBus[0].index]);
+~perf_2 = Synth(\perf_4_pad, [\out, ~delayBus[1].index]);
+~perf_3 = Synth(\perf_5_pad, [\out, ~delayBus[2].index]);
+~perf_4 = Synth(\perf_1_pad, [\out, ~delayBus[3].index]);
+~perf_5 = Synth(\perf_2_pad, [\out, ~delayBus[4].index]);
+
+perfData.textureSounds = perfData.textureSounds ? ();
+perfData.textureSounds.routines = List.new(2);
+
+perfData.textureSounds.routines.add(
+	Routine({
+		loop({
+			1.wait;
+			~perf_4.set(\gate, 1);
+				"perf_4 start".postln;
+			(3.0.rand + 0.5).wait;
+			~perf_4.set(\gate, 0);
+				"perf_4 end".postln;
+			(20.0.rand + 5).wait;
+		});
+	});
+);
+
+perfData.textureSounds.routines.add(
+	Routine({
+		loop({
+				1.wait;
+			~perf_5.set(\gate, 1);
+				"perf_5 start".postln;
+			(3.0.rand + 0.5).wait;
+			~perf_5.set(\gate, 0);
+				"perf_5 end".postln;
+			(20.0.rand + 5).wait;
+		});
+	});
+);
 
 OSCFunc({ |msg, time, addr, recvPort|
 	var x = case
@@ -253,7 +284,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_n, [\out, ~outputBus.index + 4]);
+		Synth(\trig_b, [\out, ~outputBus.index + 4]);
 		//Synth.head(s, \trig_1, [\out, ~delayBus[0].index]);
 	}
 	{msg[1] == \trig_2} {
@@ -303,7 +334,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\out, ~outputBus.index + 4]);
+		Synth(\trig_b, [\out, ~outputBus.index + 4]);
 		//Synth.head(s, \trig_2, [\out, ~delayBus[0].index]);
 	}
 	{msg[1] == \trig_3} {
@@ -354,7 +385,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\out, ~outputBus.index + 4]);
+		Synth(\trig_b, [\out, ~outputBus.index + 4]);
 		//Synth.head(s, \trig_3, [\out, ~delayBus[0].index]);
 	}
 	{msg[1] == \trig_4} {
@@ -405,7 +436,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\out, ~outputBus.index + 4]);
+		Synth(\trig_b, [\out, ~outputBus.index + 4]);
 		//Synth.head(s, \trig_4, [\out, ~delayBus[0].index]);
 	};
 
@@ -462,7 +493,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\out, ~outputBus.index + 5]);
+		Synth(\trig_b, [\out, ~outputBus.index + 5]);
 		//Synth.head(s, \trig_1, [\out, ~delayBus[1].index]);
 	}
 	{msg[1] == \trig_2} {
@@ -513,7 +544,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\out, ~outputBus.index + 5]);
+		Synth(\trig_b, [\out, ~outputBus.index + 5]);
 		//Synth.head(s, \trig_2, [\out, ~delayBus[1].index]);
 	}
 	{msg[1] == \trig_3} {
@@ -564,7 +595,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\out, ~outputBus.index + 5]);
+		Synth(\trig_b, [\out, ~outputBus.index + 5]);
 		//Synth.head(s, \trig_3, [\out, ~delayBus[1].index]);
 	}
 	{msg[1] == \trig_4} {
@@ -615,7 +646,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\out, ~outputBus.index + 5]);
+		Synth(\trig_b, [\out, ~outputBus.index + 5]);
 		//Synth.head(s, \trig_4, [\out, ~delayBus[1].index]);
 	};
 
@@ -668,7 +699,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\out, ~outputBus.index + 6]);
+		Synth(\trig_b, [\out, ~outputBus.index + 6]);
 		//Synth.head(s, \trig_1, [\out, ~delayBus[2].index]);
 	}
 	{msg[1] == \trig_2} {
@@ -715,7 +746,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\out, ~outputBus.index + 6]);
+		Synth(\trig_b, [\out, ~outputBus.index + 6]);
 		//Synth.head(s, \trig_2, [\out, ~delayBus[2].index]);
 	}
 	{msg[1] == \trig_3} {
@@ -762,7 +793,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\out, ~outputBus.index + 6]);
+		Synth(\trig_b, [\out, ~outputBus.index + 6]);
 		//Synth.head(s, \trig_3, [\out, ~delayBus[2].index]);
 	}
 	{msg[1] == \trig_4} {
@@ -809,7 +840,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\out, ~outputBus.index + 6]);
+		Synth(\trig_b, [\out, ~outputBus.index + 6]);
 		//Synth.head(s, \trig_4, [\out, ~delayBus[2].index]);
 	};
 
@@ -862,7 +893,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\out, ~outputBus.index + 7]);
+		Synth(\trig_b, [\out, ~outputBus.index + 7]);
 		//Synth.head(s, \trig_1, [\out, ~delayBus[3].index]);
 	}
 	{msg[1] == \trig_2} {
@@ -909,7 +940,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\out, ~outputBus.index + 7]);
+		Synth(\trig_b, [\out, ~outputBus.index + 7]);
 		//Synth.head(s, \trig_2, [\out, ~delayBus[3].index]);
 	}
 	{msg[1] == \trig_3} {
@@ -956,7 +987,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\out, ~outputBus.index + 7]);
+		Synth(\trig_b, [\out, ~outputBus.index + 7]);
 		//Synth.head(s, \trig_3, [\out, ~delayBus[3].index]);
 	}
 	{msg[1] == \trig_4} {
@@ -1003,7 +1034,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\out, ~outputBus.index + 7]);
+		Synth(\trig_b, [\out, ~outputBus.index + 7]);
 		//Synth.head(s, \trig_4, [\out, ~delayBus[3].index]);
 	};
 
@@ -1056,7 +1087,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_1, [\out, ~outputBus.index + 8]);
+		Synth(\trig_b, [\out, ~outputBus.index + 8]);
 		//Synth.head(s, \trig_1, [\out, ~delayBus[4].index]);
 	}
 	{msg[1] == \trig_2} {
@@ -1103,7 +1134,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_2, [\out, ~outputBus.index + 8]);
+		Synth(\trig_b, [\out, ~outputBus.index + 8]);
 		//Synth.head(s, \trig_2, [\out, ~delayBus[4].index]);
 	}
 	{msg[1] == \trig_3} {
@@ -1150,7 +1181,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_3, [\out, ~outputBus.index + 8]);
+		Synth(\trig_b, [\out, ~outputBus.index + 8]);
 		//Synth.head(s, \trig_3, [\out, ~delayBus[4].index]);
 	}
 	{msg[1] == \trig_4} {
@@ -1197,7 +1228,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 			});
 		});
 
-		Synth(\trig_4, [\out, ~outputBus.index + 8]);
+		Synth(\trig_b, [\out, ~outputBus.index + 8]);
 		//Synth.head(s, \trig_4, [\out, ~delayBus[4].index]);
 	};
 
@@ -1222,7 +1253,9 @@ OSCFunc({ |msg, time, addr, recvPort|
 }, '/fieldcuts/lights');
 
 OSCFunc({
-
+	"start extra delay texture routines".postln;
+		perfData.textureSounds.routines.at(0).play;
+		perfData.textureSounds.routines.at(1).play;
 }, '/fieldcuts/delayTextures');
 
 OSCFunc({
