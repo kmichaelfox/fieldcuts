@@ -136,7 +136,7 @@ perfData.perf5.trig4.offDur = List.new(10);
 
 
 
-
+Server.local.options.sampleRate_(48000);
 Server.local.options.outDevice_("HDSPe MADIface (22802690)");
 Server.local.options.numOutputBusChannels(9);
 //Server.local.options.outDevice_("AudioBox USB");
@@ -193,11 +193,16 @@ s.doWhenBooted({
 //~perf_2 = Synth(\perf_2_pad, [\xpos, 0, \ypos, 1,  \out, ~delayBus[1].index]);
 //~perf_3 = Synth(\perf_3_pad, [\xpos, 1, \ypos, 0.5,  \out, ~delayBus[2].index]);
 
-~perf_1 = Synth(\perf_1_pad, [\out, ~delayBus[0].index]);
+/*~perf_1 = Synth(\perf_1_pad, [\out, ~delayBus[0].index]);
 ~perf_2 = Synth(\perf_2_pad, [\out, ~delayBus[1].index]);
 ~perf_3 = Synth(\perf_5_pad, [\out, ~delayBus[2].index]);
 ~perf_4 = Synth(\perf_4_pad, [\out, ~delayBus[3].index]);
-~perf_5 = Synth(\perf_3_pad, [\out, ~delayBus[4].index]);
+~perf_5 = Synth(\perf_3_pad, [\out, ~delayBus[4].index]);*/
+	~perf_1 = Synth(\perf_3_pad, [\out, ~delayBus[0].index]);
+	~perf_2 = Synth(\perf_4_pad, [\out, ~delayBus[1].index]);
+	~perf_3 = Synth(\perf_5_pad, [\out, ~delayBus[2].index]);
+	~perf_4 = Syntn(\perf_1_pad, [\out, ~delayBus[3].index]);
+	~perf_5 = Synth(\perf_2_pad, [\out, ~delayBus[4].index]);
 
 OSCFunc({ |msg, time, addr, recvPort|
 	var x = case
@@ -251,7 +256,7 @@ OSCFunc({ |msg, time, addr, recvPort|
 		Synth(\trig_n, [\out, ~outputBus.index + 4]);
 		//Synth.head(s, \trig_1, [\out, ~delayBus[0].index]);
 	}
-	{msg[1] == \trig_1} {
+	{msg[1] == \trig_2} {
 		("perf_1 -> trig_2 " + msg[2]).postln;
 
 		if(msg[2] == 'on', {
@@ -1215,6 +1220,10 @@ OSCFunc({ |msg, time, addr, recvPort|
 	"cue lights".postln;
 	Synth(\lights, [\out, 0, \dur, msg[1]]);
 }, '/fieldcuts/lights');
+
+OSCFunc({
+
+}, '/fieldcuts/delayTextures');
 
 OSCFunc({
 	~master.set(\gate, 0);

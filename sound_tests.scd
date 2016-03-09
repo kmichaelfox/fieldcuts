@@ -147,6 +147,6 @@ gui.trigger = Button(gui.w, Rect(gui.margin + ((gui.buttonWidth + gui.margin) * 
 ])
 .action_({
 	"trigger".postln;
-	Synth(\trig_b, [\out, 0]);
+	Synth(\trig_b, [\out, 5]);
 });
 )

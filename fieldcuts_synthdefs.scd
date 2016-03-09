@@ -9,19 +9,26 @@ SynthDef(\master, { |in, out = 0, gate = 1|
 	Out.ar(out, FreeVerb.ar(env, 0.2, 5, 0.8));
 }).add;
 
-SynthDef(\netDelay, { |in1, in2, in3, in4, in5, scale = 0, out = 0|
+SynthDef(\netDelay, { |in1, in2, in3, in4, in5, scale = 0, out = 0, delay_feedback = 0.9|
 	var feedback, sig1, sig2, sig3, sig4, sig5, delay;
 
 	feedback = LPF.ar(EnvGen.ar(Env.adsr(attackTime: (0.01 * 60), curve: 0), scale) * LocalIn.ar(5), 400);
 	//feedback = LPF.ar(LocalIn.ar(5), 400);
 
-	sig1 = In.ar(in1) + (feedback[0] * 0.9);
-	sig2 = In.ar(in2) + (feedback[1] * 0.9);
-	sig3 = In.ar(in3) + (feedback[2] * 0.9);
-	sig4 = In.ar(in4) + (feedback[3] * 0.9);
-	sig5 = In.ar(in5) + (feedback[4] * 0.9);
+	sig1 = In.ar(in1) + (feedback[0] * delay_feedback);
+	sig2 = In.ar(in2) + (feedback[1] * delay_feedback);
+	sig3 = In.ar(in3) + (feedback[2] * delay_feedback);
+	sig4 = /*In.ar(in4) + */(feedback[3] * delay_feedback);
+	sig5 = /*In.ar(in5) + */(feedback[4] * delay_feedback);
 
-	delay = DelayN.ar([sig1, sig2, sig3, sig4, sig5], 1.5, [Rand(0.5, 1.5), Rand(0.5, 1.5), Rand(0.5, 1.5), Rand(0.5, 1.5), Rand(0.5, 1.5)]);
+	delay = DelayN.ar(
+		[
+			sig1,
+			sig2,
+			sig3,
+			sig4 + In.ar(in4),
+			sig5 + In.ar(in5)
+	    ], 1.5, [Rand(0.5, 1.5), Rand(0.5, 1.5), Rand(0.5, 1.5), Rand(0.5, 1.5), Rand(0.5, 1.5)]);
 
 	LocalOut.ar([
 		TWChoose.ar( Dust.ar(0.9), delay, [0.05, 0.2375, 0.2375, 0.2375, 0.2375] ),
@@ -97,11 +104,11 @@ SynthDef(\trig_b, { |out = 0|
 
 	freq = Select.kr(freq, IRand(0, freq.size - 1)) + (12 * 10);
 
-	//osc = BPF.ar(WhiteNoise.ar(0.5), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps, mul:0.4));
+	osc = EnvGen.ar(Env.perc(0.2, 0.1))*BPF.ar(WhiteNoise.ar(0.3), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * Mix.ar(SinOsc.ar(([2, 10] + (12 * 3)).midicps * Rand(0.9, 1.1), mul:0.4)));
 
-	osc = [Mix.ar(SinOsc.ar([freq - 12, freq, freq + 3, freq + 5].midicps, mul:0.01)) + (BrownNoise.ar(0.01) * PinkNoise.ar(0.01)), BPF.ar(WhiteNoise.ar(0.5), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps, mul:0.4))];
+	//osc = [Mix.ar(SinOsc.ar([freq - 12, freq, freq + 3, freq + 5].midicps, mul:0.01)) + (BrownNoise.ar(0.01) * PinkNoise.ar(0.01)), BPF.ar(WhiteNoise.ar(0.5), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps, mul:0.4))];
 
-	env = EnvGen.ar(Env.perc(releaseTime: [0.6, 0.3]), doneAction: 2);
+	env = EnvGen.ar(Env.perc(releaseTime: [0.4, 0.2]), doneAction: 2);
 
 	sig = MulAdd(osc * env, SinOsc.kr(30 + SinOsc.kr(0.2, mul: 3), mul:0.5, add:0.5));
 
@@ -188,7 +195,7 @@ SynthDef(\perf_3_pad, {|pan = 0, gate = 0, out = 0|
 	freq = TChoose.kr(Changed.kr(gate),[0, 2, 3, 5]) + (12 * 3);
 
 	//osc = Mix.ar(SinOsc.ar(410 * [0.5, 0.98, 1, 1.01,  2, 4], mul: 0.05));
-	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, 0, 0.6), freq.midicps)).clip(-1, 1);
+	osc = Mix.ar(LPF.ar(LFTri.ar((freq + [0, 3, 5]).midicps, 0, 0.6), freq.midicps)).clip(-0.8, 0.8);
 
 	env = EnvGen.kr(Env.adsr(3, curve:8), gate, doneAction: 0);
 
@@ -233,7 +240,7 @@ SynthDef(\perf_5_pad, {|pan = 0, gate = 0, out = 0|
 
 	osc = (NTube.ar(PinkNoise.ar*SinOsc.ar(0.25, mul:0.25, add: 0.75),`[0.97,1.0,1.0,1.0,1.0,0.97],`[0.5,   0.9   ,0.2,-0.4],`([0.01,0.02,0.01,0.005,0.05]*freq))*0.1).dup;
 
-	env = EnvGen.kr(Env.adsr(3, 1, curve:8), gate, doneAction: 0);
+	env = EnvGen.kr(Env.adsr(5, 1, curve:\lin), gate, doneAction: 0);
 
 	sig = osc * env;
 
