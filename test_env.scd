@@ -1259,6 +1259,7 @@ OSCFunc({
 }, '/fieldcuts/delayTextures');
 
 OSCFunc({
+		"fading out".postln;
 	~master.set(\gate, 0);
 }, '/fieldcuts/fadeOut');
 

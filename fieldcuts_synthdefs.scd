@@ -4,7 +4,7 @@ SynthDef(\master, { |in, out = 0, gate = 1|
 
 	osc = In.ar(in, 9);
 
-	env = osc * EnvGen.kr(Env.adsr(releaseTime:(60 * 4), curve:-10), gate, doneAction:0);
+	env = osc * EnvGen.kr(Env.adsr(releaseTime:(60 * 0.5), curve:-10), gate, doneAction:0);
 
 	Out.ar(out, FreeVerb.ar(env, 0.2, 5, 0.8));
 }).add;
