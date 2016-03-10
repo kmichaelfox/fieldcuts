@@ -49,9 +49,9 @@ SynthDef(\netDelay, { |in1, in2, in3, in4, in5, scale = 0, out = 0, delay_feedba
 		//	Pan4.ar(sig5)
 		//);
 	  Out.ar(out,
-			Pan4.ar(sig1, -0.75, 0.75) +
-			Pan4.ar(sig2, -0.75, 0) +
-			Pan4.ar(sig3, -0.75, -0.75) +
+			Pan4.ar(sig1, -0.6, 0.75) +
+			Pan4.ar(sig2, -0.6, 0) +
+			Pan4.ar(sig3, -0.6, -0.75) +
 			Pan4.ar(sig4, 0.75, 0.75) +
 			Pan4.ar(sig5, 0.75, -0.75)
 		);
@@ -120,7 +120,7 @@ SynthDef(\trig_b, { |out = 0|
 
 	env = EnvGen.ar(Env.perc(releaseTime: [0.4, 0.2]), doneAction: 2);
 
-	sig = MulAdd(osc * env, SinOsc.kr(30 + SinOsc.kr(0.2, mul: 3), mul:0.5, add:0.5));
+	sig = MulAdd(osc * env * 1.7, SinOsc.kr(30 + SinOsc.kr(0.2, mul: 3), mul:0.5, add:0.5));
 
 	Out.ar(out, sig);
 }).add;
