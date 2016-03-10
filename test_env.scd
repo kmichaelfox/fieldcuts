@@ -1,3 +1,6 @@
+// Author: K. Michael Fox
+// email: kmichaelfox.contact@gmail.com
+// website: http://kmichaelfox.com
 (
 // pre-initialize data tracking space
 var perfData = perfData ? ();
