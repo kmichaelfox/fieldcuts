@@ -1239,10 +1239,10 @@ OSCFunc({ |msg, time, addr, recvPort|
 		if(msg[1] == 'on',
 			{
 				"new connection".postln;
-				Synth(\connect_on, [\out, ~delayBus[4].index]);
+				Synth(\connect_on, [\out, ~delayBus[2].index]);
 			}, {
 				"terminating connection".postln;
-				Synth(\connect_off, [\out, ~delayBus[4].index]);
+				Synth(\connect_off, [\out, ~delayBus[2].index]);
 			}
 		);
 }, '/fieldcuts/connect');

@@ -12,7 +12,7 @@ SynthDef(\master, { |in, out = 0, gate = 1|
 SynthDef(\netDelay, { |in1, in2, in3, in4, in5, scale = 0, out = 0, delay_feedback = 0.9|
 	var feedback, sig1, sig2, sig3, sig4, sig5, delay;
 
-	feedback = LPF.ar(EnvGen.ar(Env.adsr(attackTime: (0.01 * 60), curve: 0), scale) * LocalIn.ar(5), 400);
+	feedback = LPF.ar(EnvGen.ar(Env.adsr(attackTime: (15 * 60), curve: 0), scale) * LocalIn.ar(5), 400);
 	//feedback = LPF.ar(LocalIn.ar(5), 400);
 
 	sig1 = In.ar(in1) + (feedback[0] * delay_feedback);
@@ -104,13 +104,13 @@ SynthDef(\trig_b, { |out = 0|
 
 	freq = Select.kr(freq, IRand(0, freq.size - 1)) + (12 * 10);
 
-	osc = EnvGen.ar(Env.perc(0.2, 0.1))*BPF.ar(WhiteNoise.ar(0.3), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.5)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * Mix.ar(SinOsc.ar(([2, 10] + (12 * 3)).midicps * Rand(0.9, 1.1), mul:0.6)));
+	osc = EnvGen.ar(Env.perc(0.2, 0.1))*BPF.ar(WhiteNoise.ar(0.6), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.5)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * Mix.ar(SinOsc.ar(([2, 10] + (12 * 3)).midicps * Rand(0.9, 1.1), mul:1)));
 
 	//osc = [Mix.ar(SinOsc.ar([freq - 12, freq, freq + 3, freq + 5].midicps, mul:0.01)) + (BrownNoise.ar(0.01) * PinkNoise.ar(0.01)), BPF.ar(WhiteNoise.ar(0.5), 16000, XLine.ar(Rand(0.01, 0.3), Rand(0.01, 0.3), 0.3)) + (EnvGen.ar(Env.perc(1, 0.5), doneAction:0) * SinOsc.ar((2 + (12 * 3)).midicps, mul:0.4))];
 
 	env = EnvGen.ar(Env.perc(releaseTime: [0.4, 0.2]), doneAction: 2);
 
-	sig = MulAdd(osc * env, SinOsc.kr(30 + SinOsc.kr(0.2, mul: 3), mul:0.5, add:0.5));
+	sig = MulAdd(osc * env * 1.7, SinOsc.kr(30 + SinOsc.kr(0.2, mul: 3), mul:0.5, add:0.5));
 
 	Out.ar(out, sig);
 }).add;

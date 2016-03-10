@@ -153,4 +153,4 @@ gui.trigger = Button(gui.w, Rect(gui.margin + ((gui.buttonWidth + gui.margin) * 
 
 n = NetAddr.new("127.0.0.1", 57120);
 ~netDel.set(\scale, 1);
-n.sendMsg("/fieldcuts/delayTextures");
+n.sendMsg("/fieldcuts/fadeOut");
